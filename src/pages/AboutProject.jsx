@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Button from "../components/shared/Button";
 import AnimatedSection from "../components/shared/AnimatedSection";
 
 function AboutProject() {
+    useEffect(() => {
+        window.scrollTo(0, {
+            top: 0,
+            behavior: "smooth",
+        });
+    }, []);
+
     return (
         <AnimatedSection>
             <div className="mx-auto max-w-[800px] mt-[76px] font-roboto mb-6 p-6 lg:p-12 border border-[#0E464F] bg-[#041E23] flex flex-col gap-8 rounded-[40px]">

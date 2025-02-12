@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useFormContext } from "react-hook-form";
 import envelop from "../assets/envelop.svg";
 import cloud from "../assets/cloud.svg";
+import { useEffect } from "react";
 
 function AttendeeDetailsForm({ setStepCounter, setCurrentSection }) {
     const {
@@ -12,6 +13,13 @@ function AttendeeDetailsForm({ setStepCounter, setCurrentSection }) {
         formState: { errors },
         reset,
     } = useFormContext();
+
+    useEffect(()=> {
+        window.scrollTo(0, {
+            top: 0,
+            behavior: "smooth"
+        })
+    }, [])
 
     const onSubmit = async (data) => {
         try {
@@ -45,7 +53,7 @@ function AttendeeDetailsForm({ setStepCounter, setCurrentSection }) {
             noValidate
             className="text-[#FAFAFA] font-roboto flex flex-col gap-8 mx-auto lg:p-6 max-w-[604px] rounded-[32px] lg:border border-[#0E464F] lg:bg-[#08252B]"
         >
-            <div className="relative flex flex-col lg:gap-8 sm:h-[243px] lg:h-auto justify-between p-6 rounded-3xl border border-[#07373F] bg-[#052228]">
+            <div className="relative flex flex-col gap-3 lg:gap-8 sm:h-[243px] lg:h-auto justify-between p-6 rounded-3xl border border-[#07373F] bg-[#052228]">
                 <p>Upload Profile Photo</p>
                 <div className="relative h-[240px] lg:flex items-center justify-center">
                     <div className="hidden lg:block w-full h-[200px] bg-black/20"></div>

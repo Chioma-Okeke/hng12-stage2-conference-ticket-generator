@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Select from "./shared/Select";
 import Button from "./shared/Button";
 import PropTypes from "prop-types";
@@ -24,10 +24,17 @@ const availableTickets = [
 function EventBooking({ setStepCounter, setCurrentSection }) {
     const [selectedTicket, setSelectedTicket] = useState({});
 
-    const nextSection = () =>  {
-        setCurrentSection("Attendee Section")
-        setStepCounter(2)
-    }
+    useEffect(() => {
+        window.scrollTo(0, {
+            top: 0,
+            behavior: "smooth",
+        });
+    }, []);
+
+    const nextSection = () => {
+        setCurrentSection("Attendee Section");
+        setStepCounter(2);
+    };
 
     return (
         <section className="text-[#FAFAFA] flex flex-col gap-8 mx-auto md:p-6 max-w-[604px] rounded-[32px] md:border border-[#0E464F] md:bg-[#08252B]">
@@ -100,7 +107,7 @@ function EventBooking({ setStepCounter, setCurrentSection }) {
 
 EventBooking.propTypes = {
     setStepCounter: PropTypes.func,
-    setCurrentSection: PropTypes.func
+    setCurrentSection: PropTypes.func,
 };
 
 export default EventBooking;

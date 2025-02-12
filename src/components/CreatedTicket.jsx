@@ -1,12 +1,20 @@
 import Button from "./shared/Button";
 import PropTypes from "prop-types";
 import Ticket from "./Ticket";
+import { useEffect } from "react";
 
 function CreatedTicket({ setStepCounter, setCurrentSection }) {
     const bookAnotherTicket = () => {
         setCurrentSection("Ticket Selection");
         setStepCounter(1);
     };
+    
+    useEffect(() => {
+            window.scrollTo(0, {
+                top: 0,
+                behavior: "smooth",
+            });
+        }, []);
 
     return (
         <section className="text-[#FAFAFA] mx-auto max-w-[700px] rounded-3xl">
