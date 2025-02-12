@@ -3,8 +3,7 @@ import { useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 import PropTypes from "prop-types";
 
-const Select = ({ options, placeholder = "Select an option" }) => {
-    const [selected, setSelected] = useState(null);
+const Select = ({ options, placeholder = "Select an option", numberOfTickets, setNumberOfTickets }) => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
@@ -14,7 +13,7 @@ const Select = ({ options, placeholder = "Select an option" }) => {
                 onClick={() => setIsOpen(!isOpen)}
                 className="w-full flex justify-between items-center p-3 border border-[#07373F] bg-[#052228] rounded-lg focus:ring-2 focus:ring-blue-500"
             >
-                <span>{selected ? selected : placeholder}</span>
+                <span>{numberOfTickets ? numberOfTickets : placeholder}</span>
                 <IoIosArrowDown
                     className={`w-5 h-5 transition-transform ${
                         isOpen ? "rotate-180" : ""
@@ -29,7 +28,7 @@ const Select = ({ options, placeholder = "Select an option" }) => {
                         <li
                             key={option}
                             onClick={() => {
-                                setSelected(option);
+                                setNumberOfTickets(option);
                                 setIsOpen(false);
                             }}
                             className="px-4 py-2 flex justify-between items-center hover:border border-[#07373F] cursor-pointer"

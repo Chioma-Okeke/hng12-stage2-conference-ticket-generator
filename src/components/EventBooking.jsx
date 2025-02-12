@@ -23,6 +23,7 @@ const availableTickets = [
 
 function EventBooking({ setStepCounter, setCurrentSection }) {
     const [selectedTicket, setSelectedTicket] = useState({});
+    const [numberOfTickets, setNumberOfTickets] = useState(null);
 
     useEffect(() => {
         window.scrollTo(0, {
@@ -32,8 +33,12 @@ function EventBooking({ setStepCounter, setCurrentSection }) {
     }, []);
 
     const nextSection = () => {
-        setCurrentSection("Attendee Section");
-        setStepCounter(2);
+        const formData = new FormData()
+        formData.append("numberOfTickets", numberOfTickets)
+        formData.append("selectedTicket", selectedTicket)
+        console.log(formData, "data here")
+        // setCurrentSection("Attendee Section");
+        // setStepCounter(2);
     };
 
     return (
@@ -62,7 +67,7 @@ function EventBooking({ setStepCounter, setCurrentSection }) {
                         return (
                             <button
                                 onClick={() => setSelectedTicket(ticket)}
-                                className={`md:max-w-[158px] p-3 border-2 border-[#197686] rounded-xl flex flex-col gap-3 transition-colors ease-in-out duration-300 cursor-pointer hover:bg-[#12464E] ${
+                                className={`md:max-w-[158px] p-3 border-2 border-[#197686] rounded-xl flex flex-col gap-3 transition-colors ease-in-out duration-300 cursor-pointer hover:bg-[#2C545B] ${
                                     selectedTicket.accessType ===
                                     ticket.accessType
                                         ? "bg-[#12464E]"
@@ -87,7 +92,7 @@ function EventBooking({ setStepCounter, setCurrentSection }) {
             <div className="flex flex-col gap-2">
                 <p>Number of Tickets</p>
                 <div>
-                    <Select options={[1, 2, 3, 4, 5, 6, 7, 8]} />
+                    <Select options={[1, 2, 3, 4, 5, 6, 7, 8]} setNumberOfTickets={setNumberOfTickets} numberOfTickets={numberOfTickets}/>
                 </div>
             </div>
             <div className="flex flex-col-reverse md:flex-row gap-4 md:gap-6">

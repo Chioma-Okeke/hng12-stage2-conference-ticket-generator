@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import Button from "../components/shared/Button";
 import AnimatedSection from "../components/shared/AnimatedSection";
 
