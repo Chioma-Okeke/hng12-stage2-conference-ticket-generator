@@ -2,10 +2,15 @@ import { useState } from "react";
 import EventContainer from "../components/EventContainer";
 import AnimatedSection from "../components/shared/AnimatedSection";
 import { motion, AnimatePresence } from "framer-motion";
-import Events from "../components/Events";
+import AttendeeDetailsForm from "../components/AttendeeDetailsForm";
+import { FormProvider, useForm } from "react-hook-form";
+import EventBooking from "../components/EventBooking";
+import CreatedTicket from "../components/CreatedTicket";
 
 function Home() {
     const [stepCounter, setStepCounter] = useState(1);
+    const [currentSection, setCurrentSection] = useState("Ticket Selection");
+    const methods = useForm();
 
     const stepVariants = {
         initial: { opacity: 0.2, x: 50 },
@@ -14,57 +19,48 @@ function Home() {
     };
 
     return (
-        <div>
+        <div className="mt-[46px]">
             <AnimatedSection>
-                <EventContainer stepCounter={stepCounter}>
+                <EventContainer
+                    currentSection={currentSection}
+                    stepCounter={stepCounter}
+                    className="mb-[42px] md:mb-[112px]"
+                >
                     <AnimatePresence mode="wait">
                         <motion.div
-                            key={stepCounter} // Ensures re-render and animation trigger
+                            key={stepCounter}
                             initial="initial"
                             animate="animate"
                             exit="exit"
-                            transition={{ duration: 0.4 }}
+                            transition={{ duration: 0.2 }}
                             variants={stepVariants}
                         >
                             {stepCounter === 1 && (
                                 <>
-                                    <Events setStepCounter={setStepCounter}/>
+                                    <EventBooking
+                                        setStepCounter={setStepCounter}
+                                        setCurrentSection={setCurrentSection}
+                                    />
                                 </>
                             )}
                             {stepCounter === 2 && (
                                 <>
-                                    <h1 className="bg-white text-black">
-                                        Section 2
-                                    </h1>
-                                    <div>
-                                        <button className="bg-white text-black">
-                                            Cancel
-                                        </button>
-                                        <button
-                                            className="bg-white text-black"
-                                            onClick={() => setStepCounter(3)}
-                                        >
-                                            Next
-                                        </button>
-                                    </div>
+                                    <FormProvider {...methods}>
+                                        <AttendeeDetailsForm
+                                            setStepCounter={setStepCounter}
+                                            setCurrentSection={
+                                                setCurrentSection
+                                            }
+                                        />
+                                    </FormProvider>
                                 </>
                             )}
                             {stepCounter === 3 && (
                                 <>
-                                    <h1 className="bg-white text-black">
-                                        Section 3
-                                    </h1>
-                                    <div>
-                                        <button className="bg-white text-black">
-                                            Cancel
-                                        </button>
-                                        <button
-                                            className="bg-white text-black"
-                                            onClick={() => setStepCounter(1)}
-                                        >
-                                            Restart
-                                        </button>
-                                    </div>
+                                    <CreatedTicket
+                                        setStepCounter={setStepCounter}
+                                        setCurrentSection={setCurrentSection}
+                                    />
                                 </>
                             )}
                         </motion.div>

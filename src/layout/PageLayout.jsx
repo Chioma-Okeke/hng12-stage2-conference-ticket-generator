@@ -21,13 +21,13 @@ function PageLayout() {
     // }
 
     return (
-        <main className="relative px-5 lg:p-0">
+        <main className="relative px-5 lg:p-0 bg-[]">
             <NavSection
             // handleNavToggle={handleNavToggle}
             // showNav={showNav}
             // setShowNav={setShowNav}
             />
-            <div tabIndex={0} className="pt-[46px]">
+            <div tabIndex={0}>
                 <Outlet />
             </div>
         </main>
