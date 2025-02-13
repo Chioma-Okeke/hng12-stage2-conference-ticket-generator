@@ -1,11 +1,12 @@
-import Button from "./shared/Button";
 import PropTypes from "prop-types";
-import Ticket from "./Ticket";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useRef, useState } from "react";
+
+import Ticket from "./Ticket";
+import Button from "./shared/Button";
 import { toPng } from "html-to-image";
 import Spinner from "./shared/Spinner";
 import { clearLocalStorage, saveTicketToDB } from "../utils/storage";
-import { useDispatch, useSelector } from "react-redux";
 import { setCurrentSection, setStepCounter } from "../redux/stepSlice";
 
 function CreatedTicket() {

@@ -1,11 +1,12 @@
+import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
+
 import Select from "./shared/Select";
 import Button from "./shared/Button";
-import PropTypes from "prop-types";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setCurrentSection, setStepCounter } from "../redux/stepSlice";
 import { clearLocalStorage } from "../utils/storage";
+import { setCurrentSection, setStepCounter } from "../redux/stepSlice";
 
 const availableTickets = [
     {
@@ -72,7 +73,6 @@ function EventBooking() {
         if (storedData) {
             try {
                 const data = JSON.parse(storedData);
-                console.log("Fetched data:", data);
                 setNumberOfTickets(data.numberOfTickets || null);
                 setSelectedTicket(data.selectedTicket || {});
             } catch (error) {

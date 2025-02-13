@@ -1,9 +1,10 @@
-import Logo from "../assets/logo.svg";
-import { NavLink, useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { resetStep } from "../redux/stepSlice";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { HiArrowLongRight } from "react-icons/hi2";
+import { NavLink, useNavigate } from "react-router-dom";
+
+import Logo from "../assets/logo.svg";
+import { resetStep } from "../redux/stepSlice";
 import { clearLocalStorage } from "../utils/storage";
 
 const navigationLinks = [

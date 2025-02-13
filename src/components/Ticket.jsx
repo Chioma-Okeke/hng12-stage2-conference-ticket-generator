@@ -1,5 +1,6 @@
-import barcode from "../assets/barcode.svg";
 import PropTypes from "prop-types";
+
+import barcode from "../assets/barcode.svg";
 
 function Ticket({ ticketData, userData, resultRef }) {
     return (
@@ -106,8 +107,10 @@ function Ticket({ ticketData, userData, resultRef }) {
                     aria-labelledby="ticket-details-heading"
                     className="font-roboto h-40 p-2 bg-[#07333c] rounded-lg border border-[#123d43] flex flex-col justify-center"
                 >
-                    <h2 id="ticket-details-heading" className="sr-only">Ticket Details</h2>
-                    
+                    <h2 id="ticket-details-heading" className="sr-only">
+                        Ticket Details
+                    </h2>
+
                     {/* Name & Email Row */}
                     <div className="flex w-full border-b border-[#12464e]">
                         <div className="flex-1 p-1 border-r border-[#12464e] flex flex-col">
@@ -164,7 +167,7 @@ function Ticket({ ticketData, userData, resultRef }) {
                 </div>
             </div>
             <div className="absolute bottom-[22px] left-8">
-                <img src={barcode} alt=""  aria-hidden="true"/>
+                <img src={barcode} alt="" aria-hidden="true" />
             </div>
         </div>
     );
@@ -173,6 +176,7 @@ function Ticket({ ticketData, userData, resultRef }) {
 Ticket.propTypes = {
     ticketData: PropTypes.object,
     userData: PropTypes.object,
+    resultRef: PropTypes.node,
 };
 
 export default Ticket;

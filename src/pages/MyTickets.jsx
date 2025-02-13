@@ -1,8 +1,9 @@
-import { useEffect, useState } from "react";
-import AnimatedSection from "../components/shared/AnimatedSection";
-import { getTicketsFromDB } from "../utils/storage";
-import barcode from "../assets/barcode.svg";
 import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
+
+import barcode from "../assets/barcode.svg";
+import { getTicketsFromDB } from "../utils/storage";
+import AnimatedSection from "../components/shared/AnimatedSection";
 
 function MyTickets() {
     const [fetchedData, setFetchedData] = useState([]);
@@ -18,7 +19,6 @@ function MyTickets() {
         const fetchTickets = async () => {
             try {
                 const data = await getTicketsFromDB();
-                console.log(data);
                 if (data) {
                     setFetchedData(data);
                 }
@@ -33,17 +33,25 @@ function MyTickets() {
     return (
         <div className="pt-[46px] mb-[42px] mb:mb-[112px] min-h-screen">
             <AnimatedSection>
-                <div className={`${fetchedData.length > 0 ? "flex" : " block"} h-screen overflow-y-auto tickets-container flex-col gap-8 text-[#FAFAFA] p-6 md:p-12 rounded-[40px] border border-[#0E464F] bg-[#08252B] md:bg-[#041E23] max-w-[1000px] mx-auto`}>
-                    <h1 className="text-2xl font-bold mb-6">
-                        🎟️ Your Tickets
-                    </h1>
-                    <div className={`${fetchedData.length > 0 ? "grid" : ""} grid-cols-1 md:grid-cols-2 gap-6 mx-auto`}>
+                <div
+                    className={`${
+                        fetchedData.length > 0 ? "flex" : " block"
+                    } h-screen overflow-y-auto tickets-container flex-col gap-8 text-[#FAFAFA] p-6 md:p-12 rounded-[40px] border border-[#0E464F] bg-[#08252B] md:bg-[#041E23] max-w-[1000px] mx-auto`}
+                >
+                    <h1 className="text-2xl font-bold mb-6">🎟️ Your Tickets</h1>
+                    <div
+                        className={`${
+                            fetchedData.length > 0 ? "grid" : ""
+                        } grid-cols-1 md:grid-cols-2 gap-6 mx-auto`}
+                    >
                         {fetchedData.length > 0 ? (
                             fetchedData.map((ticket, index) => (
                                 <TicketCard key={index} ticket={ticket} />
                             ))
                         ) : (
-                            <p className="text-center mx-auto">No tickets found.</p>
+                            <p className="text-center mx-auto">
+                                No tickets found.
+                            </p>
                         )}
                     </div>
                 </div>

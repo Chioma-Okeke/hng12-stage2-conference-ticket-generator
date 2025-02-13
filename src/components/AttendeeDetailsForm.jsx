@@ -1,15 +1,16 @@
-import Button from "./shared/Button";
-import PropTypes from "prop-types";
-import { motion } from "framer-motion";
-import { useFormContext } from "react-hook-form";
-import envelop from "../assets/envelop.svg";
-import cloud from "../assets/cloud.svg";
-import { useEffect, useState } from "react";
 import axios from "axios";
 import { debounce } from "lodash";
+import PropTypes from "prop-types";
+import { motion } from "framer-motion";
 import { useDispatch } from "react-redux";
-import { setCurrentSection, setStepCounter } from "../redux/stepSlice";
+import { useEffect, useState } from "react";
+import { useFormContext } from "react-hook-form";
+
+import Button from "./shared/Button";
 import Spinner from "./shared/Spinner";
+import cloud from "../assets/cloud.svg";
+import envelop from "../assets/envelop.svg";
+import { setCurrentSection, setStepCounter } from "../redux/stepSlice";
 
 function AttendeeDetailsForm() {
     const {
@@ -27,13 +28,13 @@ function AttendeeDetailsForm() {
     const [showUploadIcon, setShowUploadIcon] = useState(false);
 
     const formValues = watch();
+
     useEffect(() => {
         window.scrollTo(0, { top: 0, behavior: "smooth" });
     }, []);
 
     useEffect(() => {
         if (Object.keys(formValues).length === 0) return;
-        console.log("I am the culprit")
 
         const saveToLocalStorage = debounce(() => {
             localStorage.setItem("formData", JSON.stringify(formValues));
@@ -43,17 +44,16 @@ function AttendeeDetailsForm() {
         return () => saveToLocalStorage.cancel();
     }, [formValues]);
 
-    useEffect(() => {
-        const checkStorageClear = () => {
-            if (!localStorage.getItem("formData")) {
-                console.log("i ran");
-                reset();
-            }
-        };
+    // useEffect(() => {
+    //     const checkStorageClear = () => {
+    //         if (!localStorage.getItem("formData")) {
+    //             reset();
+    //         }
+    //     };
 
-        window.addEventListener("storage", checkStorageClear);
-        return () => window.removeEventListener("storage", checkStorageClear);
-    }, []);
+    //     window.addEventListener("storage", checkStorageClear);
+    //     return () => window.removeEventListener("storage", checkStorageClear);
+    // }, []);
 
     useEffect(() => {
         const storedData = localStorage.getItem("formData");
@@ -109,7 +109,6 @@ function AttendeeDetailsForm() {
 
     const onSubmit = async (data) => {
         try {
-            console.log(data);
             localStorage.setItem("formData", JSON.stringify(data));
             reset();
             nextSection();

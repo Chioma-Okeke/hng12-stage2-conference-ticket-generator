@@ -1,13 +1,14 @@
-import { useEffect, useState } from "react";
-import EventContainer from "../components/EventContainer";
-import AnimatedSection from "../components/shared/AnimatedSection";
-import { motion, AnimatePresence } from "framer-motion";
-import AttendeeDetailsForm from "../components/AttendeeDetailsForm";
+import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
-import EventBooking from "../components/EventBooking";
-import CreatedTicket from "../components/CreatedTicket";
+import { motion, AnimatePresence } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrentSection, setStepCounter } from "../redux/stepSlice";
+
+import EventBooking from "../components/EventBooking";
+import CreatedTicket from "../components/CreatedTicket";
+import EventContainer from "../components/EventContainer";
+import AnimatedSection from "../components/shared/AnimatedSection";
+import AttendeeDetailsForm from "../components/AttendeeDetailsForm";
 
 function Home() {
     const stepCounter = useSelector((state) => state.step.stepCounter);
@@ -18,14 +19,14 @@ function Home() {
     useEffect(() => {
         const storedFormData = localStorage.getItem("formData");
         if (storedFormData) {
-            methods.reset(JSON.parse(storedFormData)); 
+            methods.reset(JSON.parse(storedFormData));
         }
     }, [methods]);
 
     useEffect(() => {
         const checkStorageClear = () => {
             if (!localStorage.getItem("formData")) {
-                methods.reset(); 
+                methods.reset();
             }
         };
 

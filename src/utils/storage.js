@@ -57,7 +57,6 @@ export const clearTicketsDB = async () => {
 };
 
 export const clearLocalStorage = async () => {
-    
     localStorage.removeItem("Selected Ticket Details");
     localStorage.removeItem("formData");
     localStorage.removeItem("Current section");

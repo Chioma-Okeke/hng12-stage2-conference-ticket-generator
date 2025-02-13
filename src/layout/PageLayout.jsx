@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-// import BackToTop from "../components/BackToTop";
+
 import NavSection from "../components/Nav";
 
 function PageLayout() {
