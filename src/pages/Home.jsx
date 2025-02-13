@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import EventContainer from "../components/EventContainer";
 import AnimatedSection from "../components/shared/AnimatedSection";
 import { motion, AnimatePresence } from "framer-motion";
@@ -10,7 +10,22 @@ import CreatedTicket from "../components/CreatedTicket";
 function Home() {
     const [stepCounter, setStepCounter] = useState(1);
     const [currentSection, setCurrentSection] = useState("Ticket Selection");
-    const methods = useForm();
+    const storedFormData = localStorage.getItem("formData");
+    const defaultFormData = storedFormData ? JSON.parse(storedFormData) : {};
+    const methods = useForm({
+        defaultValues: defaultFormData,
+    });
+
+    useEffect(() => {
+        window.scrollTo(0, { top: 0, behavior: "smooth" });
+
+        const currentSection = localStorage.getItem("Current section");
+        if (currentSection) {
+            const data = JSON.parse(currentSection)
+            setStepCounter(data.step)
+            setCurrentSection(data.sectionTitle)
+        }
+    }, []);
 
     const stepVariants = {
         initial: { opacity: 0.2, x: 50 },

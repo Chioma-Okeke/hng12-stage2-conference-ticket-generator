@@ -1,8 +1,9 @@
-import barcode from "../assets/barcode.svg"
+import barcode from "../assets/barcode.svg";
+import PropTypes from "prop-types";
 
-function Ticket() {
+function Ticket({ ticketData, userData, resultRef }) {
     return (
-        <div className="relative w-fit mx-auto">
+        <div ref={resultRef} className="relative w-fit mx-auto">
             <svg
                 width="300"
                 height="600"
@@ -53,11 +54,7 @@ function Ticket() {
                         gradientTransform="translate(150 -6.2645e-06) rotate(90) scale(83.5 150)"
                     >
                         <stop stopColor="#24A0B5" stopOpacity="0.5" />
-                        <stop
-                            offset="1"
-                            stopColor="#24A0B5"
-                            stopOpacity="0"
-                        />
+                        <stop offset="1" stopColor="#24A0B5" stopOpacity="0" />
                     </radialGradient>
                     <radialGradient
                         id="paint1_radial_2010_3950"
@@ -68,11 +65,7 @@ function Ticket() {
                         gradientTransform="translate(150 619.5) rotate(-90) scale(217 150)"
                     >
                         <stop stopColor="#24A0B5" stopOpacity="0.5" />
-                        <stop
-                            offset="1"
-                            stopColor="#24A0B5"
-                            stopOpacity="0"
-                        />
+                        <stop offset="1" stopColor="#24A0B5" stopOpacity="0" />
                     </radialGradient>
                     <clipPath id="clip0_2010_3950">
                         <rect width="300" height="600" fill="white" />
@@ -91,55 +84,63 @@ function Ticket() {
                 </div>
                 <div className="w-fit mx-auto">
                     <img
-                        src=""
+                        src={userData.profilePhoto}
                         alt="user avatar"
-                        className="my-[20px] w-[140px] h-[140px]"
+                        className="my-[20px] w-[140px] h-[140px] rounded-xl object-cover border-4 border-[#24A0B5]"
                     />
                 </div>
-                <div className="font-roboto h-40 p-1 bg-[#07333c] rounded-lg border border-[#123d43] flex-col justify-center items-center inline-flex">
-                    <div className="self-stretch border-b border-[#12464e] justify-start items-center gap-2 inline-flex">
-                        <div className="grow shrink basis-0 p-1 border-r border-[#12464e] flex-col justify-center items-start gap-1 inline-flex">
+                <div className="font-roboto h-40 p-2 bg-[#07333c] rounded-lg border border-[#123d43] flex flex-col justify-center">
+                    {/* Name & Email Row */}
+                    <div className="flex w-full border-b border-[#12464e]">
+                        <div className="flex-1 p-1 border-r border-[#12464e] flex flex-col">
                             <div className="opacity-30 text-white text-[10px] font-normal leading-[15px]">
                                 Enter your name
                             </div>
                             <div className="text-white text-xs font-bold leading-[18px]">
-                                Avi Chukwu
+                                {userData.fullName}
                             </div>
                         </div>
-                        <div className="grow shrink basis-0 p-1 flex-col justify-center items-start gap-1 inline-flex">
+                        <div className="flex-1 p-1 flex flex-col">
                             <div className="opacity-30 text-white text-[10px] font-normal leading-[15px]">
                                 Enter your email *
                             </div>
-                            <div className="text-white text-xs font-bold leading-[18px]">
-                                User@email.com
+                            <div className="text-white text-xs font-bold leading-[18px] break-all">
+                                {userData.emailAddress}
                             </div>
                         </div>
                     </div>
-                    <div className="self-stretch border-b border-[#12464e] justify-start items-center gap-2 inline-flex">
-                        <div className="grow shrink basis-0 p-1 border-r border-[#12464e] flex-col justify-center items-start gap-1 inline-flex">
+
+                    {/* Ticket Type & Number of Tickets Row */}
+                    <div className="flex w-full border-b border-[#12464e]">
+                        <div className="flex-1 p-1 border-r border-[#12464e] flex flex-col">
                             <div className="opacity-30 text-white text-[10px] font-normal leading-[15px]">
                                 Ticket Type:
                             </div>
                             <div className="text-white text-[10px] font-normal leading-[15px]">
-                                VIP
+                                {
+                                    ticketData?.selectedTicket?.accessType?.split(
+                                        " "
+                                    )[0]
+                                }
                             </div>
                         </div>
-                        <div className="grow shrink basis-0 p-1 flex-col justify-center items-start gap-1 inline-flex">
+                        <div className="flex-1 p-1 flex flex-col">
                             <div className="opacity-30 text-white text-[10px] font-normal leading-[15px]">
-                                Ticket for :
+                                Ticket for:
                             </div>
                             <div className="text-white text-[10px] font-normal leading-[15px]">
-                                1
+                                {ticketData.numberOfTickets}
                             </div>
                         </div>
                     </div>
-                    <div className="self-stretch h-[65px] p-2 flex-col justify-center items-start gap-1 flex">
-                        <div className="self-stretch opacity-30 text-white text-[10px] font-normal leading-[15px]">
+
+                    {/* Special Request Section */}
+                    <div className="w-full p-2 flex flex-col">
+                        <div className="opacity-30 text-white text-[10px] font-normal leading-[15px]">
                             Special request?
                         </div>
-                        <div className="self-stretch text-white text-[10px] font-normal leading-[15px]">
-                            Nil ? Or the users sad story they write in there
-                            gets this whole space, Max of three rows
+                        <div className="text-white text-[10px] font-normal leading-[15px]">
+                            {userData.specialRequest}
                         </div>
                     </div>
                 </div>
@@ -150,5 +151,10 @@ function Ticket() {
         </div>
     );
 }
+
+Ticket.propTypes = {
+    ticketData: PropTypes.object,
+    userData: PropTypes.object,
+};
 
 export default Ticket;

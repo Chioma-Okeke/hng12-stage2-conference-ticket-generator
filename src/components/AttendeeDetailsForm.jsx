@@ -15,28 +15,49 @@ function AttendeeDetailsForm({ setStepCounter, setCurrentSection }) {
         formState: { errors },
         reset,
         watch,
-    } = useFormContext({
-        defaultValues: JSON.parse(localStorage.getItem("formData")) || {},
-    });
+    } = useFormContext();
 
     const [preview, setPreview] = useState("");
     const [uploading, setUploading] = useState(false);
     const [showUploadIcon, setShowUploadIcon] = useState(false);
 
     const formValues = watch(); // Watch all form fields
+    useEffect(() => {
+        window.scrollTo(0, { top: 0, behavior: "smooth" });
+    }, []);
 
     useEffect(() => {
-        localStorage.setItem("formData", JSON.stringify(formValues));
+        const nonEmptyFormValues =
+            Object.keys(formValues).length > 0 ? formValues : null;
+
+        if (nonEmptyFormValues) {
+            localStorage.setItem("formData", JSON.stringify(formValues));
+            console.log("Updated form data:", formValues);
+        }
     }, [formValues]);
 
     useEffect(() => {
-        window.scrollTo(0, { top: 0, behavior: "smooth" });
+        const storedData = localStorage.getItem("formData");
+
+        if (storedData && storedData !== "{}") {
+            try {
+                const parsedData = JSON.parse(storedData);
+                console.log("Restoring form data:", parsedData);
+
+                setPreview(parsedData.profilePhoto); // Set state first
+                reset(parsedData); // Then reset form with stored values
+            } catch (error) {
+                console.error("Error parsing form data:", error);
+            }
+        }
     }, []);
 
     const handleFileChange = async (event) => {
         const file = event.target.files[0];
         if (file) {
-            setPreview(URL.createObjectURL(file));
+            const newPreview = URL.createObjectURL(file); // Always use new file
+            setPreview(newPreview);
+
             await uploadToCloudinary(file);
         }
     };
@@ -71,7 +92,8 @@ function AttendeeDetailsForm({ setStepCounter, setCurrentSection }) {
     const onSubmit = async (data) => {
         try {
             console.log(data);
-            reset();
+            localStorage.setItem("formData", JSON.stringify(data));
+            // reset();
             nextSection();
         } catch (error) {
             console.error(error);
@@ -80,6 +102,14 @@ function AttendeeDetailsForm({ setStepCounter, setCurrentSection }) {
     };
 
     const nextSection = () => {
+        const currentSection = {
+            step: 3,
+            sectionTitle: "Ready"
+        }
+        localStorage.setItem(
+            "Current section",
+            JSON.stringify(currentSection)
+        );
         setCurrentSection("Ready");
         setStepCounter(3);
     };
@@ -116,27 +146,20 @@ function AttendeeDetailsForm({ setStepCounter, setCurrentSection }) {
                             className="absolute left-1/2 top-0 -translate-x-1/2  h-60 w-60 rounded-[32px] border-4 border-[#24A0B5]/50 bg-[#0E464F] cursor-pointer"
                         >
                             {preview ? (
-                                <div className="relative">
+                                <div
+                                    onMouseEnter={() => setShowUploadIcon(true)}
+                                    onMouseLeave={() =>
+                                        setShowUploadIcon(false)
+                                    }
+                                    className="relative"
+                                >
                                     <img
                                         src={preview}
                                         alt="Preview"
-                                        onMouseEnter={() =>
-                                            setShowUploadIcon(true)
-                                        }
-                                        onBlur={() => setShowUploadIcon(false)}
-                                        // onMouseLeave={() =>
-                                        //     setShowUploadIcon(false)
-                                        // }
-                                        className="w-full h-full object-cover rounded-[32px]"
+                                        className="w-full h-[240px] object-cover rounded-[32px]"
                                     />
                                     {showUploadIcon && (
-                                        <div
-                                            tabIndex={0}
-                                            // onPointerEnter={() =>
-                                            //     setShowUploadIcon(false)
-                                            // }
-                                            className="bg-black/20 absolute top-0 left-0 w-full h-full flex flex-col gap-4 justify-center items-center"
-                                        >
+                                        <div className="bg-black/20 absolute top-0 left-0 w-full h-full flex flex-col gap-4 justify-center items-center">
                                             <img src={cloud} alt="cloud icon" />
                                             <p className="text-center px-6">
                                                 Drag & drop or click to upload

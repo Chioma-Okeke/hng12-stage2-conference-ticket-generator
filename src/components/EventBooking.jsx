@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Select from "./shared/Select";
 import Button from "./shared/Button";
-import PropTypes from "prop-types";
+import PropTypes, { number } from "prop-types";
 
 const availableTickets = [
     {
@@ -30,15 +30,41 @@ function EventBooking({ setStepCounter, setCurrentSection }) {
             top: 0,
             behavior: "smooth",
         });
+
+        const storedData = localStorage.getItem("Selected Ticket Details");
+        if (storedData) {
+            const data = JSON.parse(storedData);
+            console.log("Fetched data:", data);
+            setNumberOfTickets(data.numberOfTickets)
+            setSelectedTicket(data.selectedTicket)
+        }
     }, []);
 
     const nextSection = () => {
-        const formData = new FormData()
-        formData.append("numberOfTickets", numberOfTickets)
-        formData.append("selectedTicket", selectedTicket)
-        console.log(formData, "data here")
-        // setCurrentSection("Attendee Section");
-        // setStepCounter(2);
+        const ticketDetails = {
+            numberOfTickets,
+            selectedTicket,
+        };
+
+        const currentSection = {
+            step: 2,
+            sectionTitle: "Attendee Details"
+        }
+
+        console.log("Storing in localStorage:", ticketDetails);
+
+        localStorage.setItem(
+            "Selected Ticket Details",
+            JSON.stringify(ticketDetails)
+        );
+
+        console.log(selectedTicket, numberOfTickets);
+        localStorage.setItem(
+            "Current section",
+            JSON.stringify(currentSection)
+        );
+        setCurrentSection("Attendee Details");
+        setStepCounter(2);
     };
 
     return (
@@ -92,7 +118,11 @@ function EventBooking({ setStepCounter, setCurrentSection }) {
             <div className="flex flex-col gap-2">
                 <p>Number of Tickets</p>
                 <div>
-                    <Select options={[1, 2, 3, 4, 5, 6, 7, 8]} setNumberOfTickets={setNumberOfTickets} numberOfTickets={numberOfTickets}/>
+                    <Select
+                        options={[1, 2, 3, 4, 5, 6, 7, 8]}
+                        setNumberOfTickets={setNumberOfTickets}
+                        numberOfTickets={numberOfTickets}
+                    />
                 </div>
             </div>
             <div className="flex flex-col-reverse md:flex-row gap-4 md:gap-6">
