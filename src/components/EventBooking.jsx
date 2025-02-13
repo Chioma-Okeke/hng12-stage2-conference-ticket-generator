@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import Select from "./shared/Select";
 import Button from "./shared/Button";
 import PropTypes, { number } from "prop-types";
+import { useNavigate } from "react-router-dom";
 
 const availableTickets = [
     {
@@ -24,6 +25,11 @@ const availableTickets = [
 function EventBooking({ setStepCounter, setCurrentSection }) {
     const [selectedTicket, setSelectedTicket] = useState({});
     const [numberOfTickets, setNumberOfTickets] = useState(null);
+    const navigate = useNavigate()
+
+    const navigateToAboutPage = () => [
+        navigate("/aboutproject")
+    ]
 
     useEffect(() => {
         window.scrollTo(0, {
@@ -126,7 +132,7 @@ function EventBooking({ setStepCounter, setCurrentSection }) {
                 </div>
             </div>
             <div className="flex flex-col-reverse md:flex-row gap-4 md:gap-6">
-                <Button className="flex-1 border border-[#24A0B5] rounded-lg">
+                <Button onClick={navigateToAboutPage} className="flex-1 border border-[#24A0B5] rounded-lg">
                     Cancel
                 </Button>
                 <Button
