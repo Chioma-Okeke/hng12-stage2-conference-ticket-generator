@@ -117,6 +117,11 @@ function AttendeeDetailsForm({ setStepCounter, setCurrentSection }) {
     const previousSection = () => {
         setCurrentSection("Ticket Selection");
         setStepCounter(1);
+        const currentSection = {
+            step: 1,
+            sectionTitle: "Ticket Selection",
+        };
+        localStorage.setItem("Current section", JSON.stringify(currentSection));
     };
 
     return (

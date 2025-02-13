@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Select from "./shared/Select";
 import Button from "./shared/Button";
-import PropTypes, { number } from "prop-types";
+import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
 const availableTickets = [
@@ -23,13 +23,33 @@ const availableTickets = [
 ];
 
 function EventBooking({ setStepCounter, setCurrentSection }) {
-    const [selectedTicket, setSelectedTicket] = useState({});
-    const [numberOfTickets, setNumberOfTickets] = useState(null);
-    const navigate = useNavigate()
+    const storedData = localStorage.getItem("Selected Ticket Details");
+    const parsedData = storedData ? JSON.parse(storedData) : {};
 
-    const navigateToAboutPage = () => [
-        navigate("/aboutproject")
-    ]
+    const [selectedTicket, setSelectedTicket] = useState(
+        parsedData.selectedTicket || {}
+    );
+    const [numberOfTickets, setNumberOfTickets] = useState(
+        parsedData.numberOfTickets || null
+    );
+    const navigate = useNavigate();
+
+    const ticketDetails = useMemo(
+        () => ({
+            numberOfTickets,
+            selectedTicket,
+        }),
+        [numberOfTickets, selectedTicket]
+    );
+
+    const navigateToAboutPage = () => navigate("/aboutproject");
+
+    useEffect(() => {
+        localStorage.setItem(
+            "Selected Ticket Details",
+            JSON.stringify(ticketDetails)
+        );
+    }, [selectedTicket, numberOfTickets]);
 
     useEffect(() => {
         window.scrollTo(0, {
@@ -39,36 +59,28 @@ function EventBooking({ setStepCounter, setCurrentSection }) {
 
         const storedData = localStorage.getItem("Selected Ticket Details");
         if (storedData) {
-            const data = JSON.parse(storedData);
-            console.log("Fetched data:", data);
-            setNumberOfTickets(data.numberOfTickets)
-            setSelectedTicket(data.selectedTicket)
+            try {
+                const data = JSON.parse(storedData);
+                console.log("Fetched data:", data);
+                setNumberOfTickets(data.numberOfTickets || null);
+                setSelectedTicket(data.selectedTicket || {});
+            } catch (error) {
+                console.error("Error parsing stored ticket data:", error);
+            }
         }
     }, []);
 
     const nextSection = () => {
-        const ticketDetails = {
-            numberOfTickets,
-            selectedTicket,
-        };
-
         const currentSection = {
             step: 2,
-            sectionTitle: "Attendee Details"
-        }
-
-        console.log("Storing in localStorage:", ticketDetails);
+            sectionTitle: "Attendee Details",
+        };
 
         localStorage.setItem(
             "Selected Ticket Details",
             JSON.stringify(ticketDetails)
         );
-
-        console.log(selectedTicket, numberOfTickets);
-        localStorage.setItem(
-            "Current section",
-            JSON.stringify(currentSection)
-        );
+        localStorage.setItem("Current section", JSON.stringify(currentSection));
         setCurrentSection("Attendee Details");
         setStepCounter(2);
     };
@@ -132,7 +144,10 @@ function EventBooking({ setStepCounter, setCurrentSection }) {
                 </div>
             </div>
             <div className="flex flex-col-reverse md:flex-row gap-4 md:gap-6">
-                <Button onClick={navigateToAboutPage} className="flex-1 border border-[#24A0B5] rounded-lg">
+                <Button
+                    onClick={navigateToAboutPage}
+                    className="flex-1 border border-[#24A0B5] rounded-lg"
+                >
                     Cancel
                 </Button>
                 <Button
