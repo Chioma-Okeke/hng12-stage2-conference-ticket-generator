@@ -4,8 +4,8 @@ import Ticket from "./Ticket";
 import { useEffect, useRef, useState } from "react";
 import { toPng } from "html-to-image";
 import Spinner from "./shared/Spinner";
-import { saveTicketToDB } from "../utils/storage";
-import { useDispatch } from "react-redux";
+import { clearLocalStorage, saveTicketToDB } from "../utils/storage";
+import { useDispatch, useSelector } from "react-redux";
 import { setCurrentSection, setStepCounter } from "../redux/stepSlice";
 
 function CreatedTicket() {
@@ -14,6 +14,7 @@ function CreatedTicket() {
     const [fetchedTicketData, setFetchedTicketData] = useState({});
     const resultRef = useRef(null);
     const [isDownloadInProgress, setIsDownloadInProgress] = useState(false);
+    const currentSection = useSelector((state) => state.step.currentSection);
 
     const downloadImage = () => {
         setIsDownloadInProgress(true);
@@ -60,11 +61,11 @@ function CreatedTicket() {
             );
             const storedUserData = localStorage.getItem("formData");
 
-            if (storedTicketData && storedUserData) {
+            if (storedTicketData && storedUserData && currentSection === "Ready") {
                 try {
                     const ticketData = JSON.parse(storedTicketData);
                     const userData = JSON.parse(storedUserData);
-                    
+
                     const alreadySaved = localStorage.getItem("TicketSaved");
                     if (!alreadySaved) {
                         await saveTicketToDB({
@@ -85,10 +86,7 @@ function CreatedTicket() {
     }, []);
 
     const bookAnotherTicket = async () => {
-        localStorage.removeItem("Selected Ticket Details");
-        localStorage.removeItem("formData");
-        localStorage.removeItem("Current section");
-        localStorage.removeItem("TicketSaved");
+        clearLocalStorage()
 
         dispatch(setStepCounter(1));
         dispatch(setCurrentSection("Ticket Selection"));
@@ -119,14 +117,14 @@ function CreatedTicket() {
             <div className="flex flex-col-reverse md:flex-row gap-4 md:gap-6">
                 <Button
                     onClick={bookAnotherTicket}
-                    ariaLabel="Book another ticket"
+                    aria-label="Book another ticket"
                     className="flex-1 border border-[#24A0B5] rounded-lg focus:ring-2 focus:ring-blue-500 hover:bg-[#24A0B5] transition-colors ease-in-out duration-300"
                 >
                     Book Another Ticket
                 </Button>
                 <Button
                     onClick={downloadImage}
-                    ariaLabel="Click to download ticket"
+                    aria-label="Click to download ticket"
                     className="flex-1 bg-[#24A0B5] rounded-lg text-white focus:ring-2 focus:ring-blue-500 hover:border hover:border-[#24A0B5] hover:bg-transparent transition-colors ease-in-out duration-300"
                 >
                     Download Ticket

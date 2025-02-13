@@ -55,3 +55,11 @@ export const clearTicketsDB = async () => {
         console.error("Error clearing IndexedDB:", error);
     }
 };
+
+export const clearLocalStorage = async () => {
+    
+    localStorage.removeItem("Selected Ticket Details");
+    localStorage.removeItem("formData");
+    localStorage.removeItem("Current section");
+    localStorage.removeItem("TicketSaved");
+}

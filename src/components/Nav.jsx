@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { resetStep } from "../redux/stepSlice";
 import { useState } from "react";
 import { HiArrowLongRight } from "react-icons/hi2";
+import { clearLocalStorage } from "../utils/storage";
 
 const navigationLinks = [
     {
@@ -27,14 +28,14 @@ function NavSection() {
     const [isButtonHovered, setIsButtonHovered] = useState(false);
 
     const navigateToMyTickets = () => {
+        clearLocalStorage();
+        dispatch(resetStep());
         navigate("/tickets");
     };
 
     const navigateHome = () => {
         dispatch(resetStep());
-        localStorage.removeItem("Selected Ticket Details");
-        localStorage.removeItem("formData");
-        localStorage.removeItem("Current section");
+        clearLocalStorage();
         navigate("/");
     };
 
@@ -45,7 +46,7 @@ function NavSection() {
                     <img
                         src={Logo}
                         alt="logo image"
-                        className="transition-transform ease-in-out duration-200 hover:scale-105"
+                        className="transition-transform ease-in-out duration-200 hover:scale-105 cursor-pointer"
                     />
                 </div>
                 <nav className="hidden md:block font-jeju">
@@ -53,6 +54,10 @@ function NavSection() {
                         {navigationLinks.map((navItem, index) => {
                             return (
                                 <NavLink
+                                    onClick={() => {
+                                        clearLocalStorage();
+                                        dispatch(resetStep());
+                                    }}
                                     className={({ isActive }) => {
                                         return (
                                             "p-[10px] no-underline transition-all ease-in-out duration-100 hover:text-white " +

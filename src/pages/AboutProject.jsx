@@ -116,11 +116,17 @@ function AboutProject() {
                     </p>
                 </div>
                 <div className="px-12 py-4 w-full max-w-[558px] mx-auto rounded-2xl border border-[#0E464F] flex flex-col-reverse md:flex-row gap-4 md:gap-6">
-                    <Button className="flex-1 border border-[#24A0B5] rounded-lg text-[#24A0B5]">
+                    <Button
+                        href="https://www.figma.com/community/file/1470800949188681164/event-ticket-booking-ui-open-source-practice-project"
+                        aria-label="Click to view figma file"
+                        className="flex-1 border border-[#24A0B5] rounded-lg focus:ring-2 focus:ring-blue-500 hover:text-[#FAFAFA] hover:bg-[#24A0B5] transition-colors ease-in-out duration-300"
+                    >
                         Design File
                     </Button>
                     <Button
-                        className="flex-1 bg-[#24A0B5] rounded-lg text-white"
+                        href="https://github.com/Chioma-Okeke/hng12-stage2-conference-ticket-generator"
+                        aria-label="Click to view github repo"
+                        className="flex-1 bg-[#24A0B5] rounded-lg text-white focus:ring-2 focus:ring-blue-500 hover:border hover:border-[#24A0B5] hover:bg-transparent transition-colors ease-in-out duration-300"
                     >
                         Github code
                     </Button>

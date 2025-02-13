@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCurrentSection, setStepCounter } from "../redux/stepSlice";
+import { clearLocalStorage } from "../utils/storage";
 
 const availableTickets = [
     {
@@ -49,7 +50,10 @@ function EventBooking() {
         [numberOfTickets, selectedTicket]
     );
 
-    const navigateToAboutPage = () => navigate("/aboutproject");
+    const navigateToAboutPage = () => {
+        navigate("/aboutproject");
+        clearLocalStorage();
+    };
 
     useEffect(() => {
         localStorage.setItem(
@@ -211,14 +215,14 @@ function EventBooking() {
             <div className="flex flex-col-reverse md:flex-row gap-4 md:gap-6">
                 <Button
                     onClick={navigateToAboutPage}
-                    ariaLabel="Cancel and return to the about page"
+                    aria-label="Cancel and return to the about page"
                     className="flex-1 border border-[#24A0B5] rounded-lg focus:ring-2 focus:ring-blue-500 hover:bg-[#24A0B5] transition-colors ease-in-out duration-300"
                 >
                     Cancel
                 </Button>
                 <Button
                     onClick={nextSection}
-                    ariaLabel="Proceed to the next section"
+                    aria-label="Proceed to the next section"
                     className="flex-1 bg-[#24A0B5] rounded-lg text-white focus:ring-2 focus:ring-blue-500 hover:border hover:border-[#24A0B5] hover:bg-transparent transition-colors ease-in-out duration-300"
                 >
                     Next

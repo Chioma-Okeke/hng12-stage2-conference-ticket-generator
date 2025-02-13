@@ -33,6 +33,7 @@ function AttendeeDetailsForm() {
 
     useEffect(() => {
         if (Object.keys(formValues).length === 0) return;
+        console.log("I am the culprit")
 
         const saveToLocalStorage = debounce(() => {
             localStorage.setItem("formData", JSON.stringify(formValues));
@@ -52,7 +53,7 @@ function AttendeeDetailsForm() {
 
         window.addEventListener("storage", checkStorageClear);
         return () => window.removeEventListener("storage", checkStorageClear);
-    }, [reset]);
+    }, []);
 
     useEffect(() => {
         const storedData = localStorage.getItem("formData");
@@ -314,14 +315,14 @@ function AttendeeDetailsForm() {
                 <Button
                     type="button"
                     onClick={previousSection}
-                    ariaLabel="Cancel and return to ticket selection section"
+                    aria-label="Cancel and return to ticket selection section"
                     className="flex-1 border border-[#24A0B5] rounded-lg focus:ring-2 focus:ring-blue-500 hover:bg-[#24A0B5] transition-colors ease-in-out duration-300"
                 >
                     Back
                 </Button>
                 <Button
                     type="submit"
-                    ariaLabel="Proceed to conference ticket"
+                    aria-label="Proceed to conference ticket"
                     className="flex-1 bg-[#24A0B5] rounded-lg text-white focus:ring-2 focus:ring-blue-500 hover:border hover:border-[#24A0B5] hover:bg-transparent transition-colors ease-in-out duration-300"
                 >
                     Get My Free Ticket

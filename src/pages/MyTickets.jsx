@@ -37,13 +37,13 @@ function MyTickets() {
                     <h1 className="text-2xl font-bold mb-6">
                         🎟️ Your Tickets
                     </h1>
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mx-auto">
+                    <div className={`${fetchedData.length > 0 ? "grid" : ""} grid-cols-1 md:grid-cols-2 gap-6 mx-auto`}>
                         {fetchedData.length > 0 ? (
                             fetchedData.map((ticket, index) => (
                                 <TicketCard key={index} ticket={ticket} />
                             ))
                         ) : (
-                            <p className="text-center">No tickets found.</p>
+                            <p className="text-center mx-auto">No tickets found.</p>
                         )}
                     </div>
                 </div>
