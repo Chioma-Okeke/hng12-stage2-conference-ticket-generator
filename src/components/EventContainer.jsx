@@ -8,7 +8,7 @@ function EventContainer({ children, stepCounter, currentSection }) {
     switch (stepCounter) {
         case 1:
             className =
-                "mt-[18px] md:mt-[46px] mb-[42px] md:mb-[112px] px-6 bg-[#08252B] md:bg-[#041E23] p-6";
+                "mt-[18px] md:mt-[46px] mb-[42px] md:mb-[112px] px-6 bg-[#08252B] md:bg-[#041E23] p-6 ticket-padding";
             headingClass =
                 "flex-col md:flex-row gap-3 md:gap-0 md:justify-between md:items-center";
                 progress="w-[40%]"
@@ -16,7 +16,7 @@ function EventContainer({ children, stepCounter, currentSection }) {
 
         case 2:
             className =
-                "mt-[18px] md:mt-[46px] mb-[40px] md:mb-[112px] px-6 bg-[#041E23] p-8";
+                "mt-[18px] md:mt-[46px] mb-[40px] md:mb-[112px] px-6 bg-[#041E23] p-8 ticket-padding";
             headingClass =
                 "flex-col gap-3 sm:gap-0 sm:flex-row sm:justify-between sm:items-center";
                 progress="w-[70%]"
@@ -35,7 +35,7 @@ function EventContainer({ children, stepCounter, currentSection }) {
 
     return (
         <div
-            className={`flex flex-col gap-8  md:p-12 rounded-[40px] border border-[#0E464F] max-w-[700px] mx-auto ${className}`}
+            className={`flex flex-col gap-8 md:p-12 rounded-[40px] border border-[#0E464F] max-w-[700px] mx-auto ${className}`}
         >
             <div>
                 <div>

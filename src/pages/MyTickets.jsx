@@ -10,8 +10,8 @@ import Spinner from "../components/shared/Spinner";
 
 function MyTickets() {
     const [fetchedData, setFetchedData] = useState([]);
-    const navigate = useNavigate()
-    const [isDeleteInProgress, setIsDeleteInProgress] = useState(false)
+    const navigate = useNavigate();
+    const [isDeleteInProgress, setIsDeleteInProgress] = useState(false);
 
     useEffect(() => {
         window.scrollTo(0, {
@@ -36,18 +36,18 @@ function MyTickets() {
     }, []);
 
     const clearDB = async () => {
-        setIsDeleteInProgress(true)
+        setIsDeleteInProgress(true);
         try {
-            await clearTicketsDB()
-            setTimeout(()=> {
-                navigate(0)
-            }, 500)
+            await clearTicketsDB();
+            setTimeout(() => {
+                navigate(0);
+            }, 500);
         } catch (error) {
             console.error("Error when fetching data:", error);
         } finally {
-            setIsDeleteInProgress(false)
+            setIsDeleteInProgress(false);
         }
-    }
+    };
 
     return (
         <div className="pt-[46px] mb-[42px] mb:mb-[112px] min-h-screen">
@@ -61,30 +61,34 @@ function MyTickets() {
                         <h1 className="text-2xl font-bold mb-6">
                             🎟️ Your Tickets
                         </h1>
-                        <Button
-                            onClick={clearDB}
-                            aria-label="Delete all tickets"
-                            className="border border-[#24A0B5] text-[#24A0B5] rounded-lg focus:ring-2 focus:ring-blue-500 hover:text-white hover:bg-[#24A0B5] transition-colors ease-in-out duration-300"
-                        >
-                            Delete all Tickets
-                        </Button>
+                        {fetchedData.length > 0 && (
+                            <Button
+                                onClick={clearDB}
+                                aria-label="Delete all tickets"
+                                className="border border-[#24A0B5] text-[#24A0B5] rounded-lg focus:ring-2 focus:ring-blue-500 hover:text-white hover:bg-[#24A0B5] transition-colors ease-in-out duration-300"
+                            >
+                                Delete all Tickets
+                            </Button>
+                        )}
                     </div>
                     <div
                         className={`${
-                            fetchedData.length > 0 ? "grid" : ""
-                        } grid-cols-1 md:grid-cols-2 gap-6 mx-auto`}
+                            fetchedData.length > 0
+                                ? "grid"
+                                : "h-[70%] flex items-center"
+                        } grid-cols-1 md:grid-cols-2 gap-6 mx-auto `}
                     >
                         {fetchedData.length > 0 ? (
                             fetchedData.map((ticket, index) => (
                                 <TicketCard key={index} ticket={ticket} />
                             ))
                         ) : (
-                            <p className="text-center mx-auto">
+                            <p className="text-center mx-auto text-xl">
                                 No tickets found.
                             </p>
                         )}
                     </div>
-                    {isDeleteInProgress && <Spinner/>}
+                    {isDeleteInProgress && <Spinner />}
                 </div>
             </AnimatedSection>
         </div>

@@ -43,7 +43,13 @@ function NavSection() {
     return (
         <header className="pt-6 font-jeju">
             <div className="mx-auto flex items-center justify-between border border-[#197686] bg-[#05252C]/40 rounded-3xl py-3 px-4 max-w-[1200px]">
-                <div tabIndex={0} onClick={navigateHome}>
+                <div
+                    tabIndex={0}
+                    onKeyDown={(e) => {
+                        e.key === "Enter" && navigateHome();
+                    }}
+                    onClick={navigateHome}
+                >
                     <img
                         src={Logo}
                         alt="logo image"
@@ -58,6 +64,17 @@ function NavSection() {
                                     onClick={() => {
                                         clearLocalStorage();
                                         dispatch(resetStep());
+                                    }}
+                                    tabIndex={0}
+                                    onKeyDown={(e) => {
+                                        if (
+                                            e.key === "Enter" ||
+                                            e.key === " "
+                                        ) {
+                                            clearLocalStorage();
+                                            dispatch(resetStep());
+                                            navigate(navItem.link)
+                                        }
                                     }}
                                     className={({ isActive }) => {
                                         return (

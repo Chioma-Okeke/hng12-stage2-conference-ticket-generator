@@ -11,32 +11,37 @@ function Select({ options, numberOfTickets, setNumberOfTickets, placeholder }) {
         setFocusedIndex(-1);
     };
 
-    const handleKeyDown = (e) => {
-        if (e.key === "ArrowDown") {
-            e.preventDefault();
-            setFocusedIndex((prev) =>
-                prev < options.length - 1 ? prev + 1 : 0
-            );
-        } else if (e.key === "ArrowUp") {
-            e.preventDefault();
-            setFocusedIndex((prev) =>
-                prev > 0 ? prev - 1 : options.length - 1
-            );
-        } else if (e.key === "Enter" && focusedIndex >= 0) {
-            e.preventDefault();
-            setNumberOfTickets(options[focusedIndex]);
-            setIsOpen(false);
-        } else if (e.key === "Escape") {
-            setIsOpen(false);
-        }
-    };
+    // const handleKeyDown = (e) => {
+    //     if (e.key === "ArrowDown") {
+    //         e.preventDefault();
+    //         setFocusedIndex((prev) =>
+    //             prev < options.length - 1 ? prev + 1 : 0
+    //         );
+    //     } else if (e.key === "ArrowUp") {
+    //         e.preventDefault();
+    //         setFocusedIndex((prev) =>
+    //             prev > 0 ? prev - 1 : options.length - 1
+    //         );
+    //     } else if (e.key === "Enter" && focusedIndex >= 0) {
+    //         e.preventDefault();
+    //         setNumberOfTickets(options[focusedIndex]);
+    //         setIsOpen(false);
+    //     } else if (e.key === "Escape") {
+    //         setIsOpen(false);
+    //     }
+    // };
 
     return (
         <div className="relative w-full text-white">
             {/* Accessible Dropdown Button */}
             <button
                 onClick={toggleDropdown}
-                onKeyDown={handleKeyDown}
+                onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {  // Handle both Enter and Space
+                        e.preventDefault(); // Prevent scrolling when space is pressed
+                        toggleDropdown();  // Call the same function as onClick
+                    }
+                }}
                 className="w-full flex justify-between items-center p-3 border border-[#07373F] bg-[#052228] rounded-lg hover:border-[#197686] focus:ring-2 focus:ring-[#197686]"
                 aria-haspopup="listbox"
                 aria-expanded={isOpen}
@@ -66,7 +71,14 @@ function Select({ options, numberOfTickets, setNumberOfTickets, placeholder }) {
                             role="option"
                             aria-selected={numberOfTickets === option}
                             tabIndex={0}
-                            onKeyDown={handleKeyDown}
+                            onKeyDown={(e) =>
+                            {
+                                if (e.key === "Enter") {
+                                    setNumberOfTickets(option)
+                                    setIsOpen(false)
+                                } 
+                            }
+                            }
                             onMouseEnter={() => setFocusedIndex(index)}
                             onClick={() => {
                                 setNumberOfTickets(option);
