@@ -1,12 +1,17 @@
 import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import barcode from "../assets/barcode.svg";
-import { getTicketsFromDB } from "../utils/storage";
+import { clearTicketsDB, getTicketsFromDB } from "../utils/storage";
 import AnimatedSection from "../components/shared/AnimatedSection";
+import Button from "../components/shared/Button";
+import Spinner from "../components/shared/Spinner";
 
 function MyTickets() {
     const [fetchedData, setFetchedData] = useState([]);
+    const navigate = useNavigate()
+    const [isDeleteInProgress, setIsDeleteInProgress] = useState(false)
 
     useEffect(() => {
         window.scrollTo(0, {
@@ -30,6 +35,20 @@ function MyTickets() {
         fetchTickets();
     }, []);
 
+    const clearDB = async () => {
+        setIsDeleteInProgress(true)
+        try {
+            await clearTicketsDB()
+            setTimeout(()=> {
+                navigate(0)
+            }, 500)
+        } catch (error) {
+            console.error("Error when fetching data:", error);
+        } finally {
+            setIsDeleteInProgress(false)
+        }
+    }
+
     return (
         <div className="pt-[46px] mb-[42px] mb:mb-[112px] min-h-screen">
             <AnimatedSection>
@@ -38,7 +57,18 @@ function MyTickets() {
                         fetchedData.length > 0 ? "flex" : " block"
                     } h-screen overflow-y-auto tickets-container flex-col gap-8 text-[#FAFAFA] p-6 md:p-12 rounded-[40px] border border-[#0E464F] bg-[#08252B] md:bg-[#041E23] max-w-[1000px] mx-auto`}
                 >
-                    <h1 className="text-2xl font-bold mb-6">🎟️ Your Tickets</h1>
+                    <div className="flex flex-col sm:flex-row justify-between items-center">
+                        <h1 className="text-2xl font-bold mb-6">
+                            🎟️ Your Tickets
+                        </h1>
+                        <Button
+                            onClick={clearDB}
+                            aria-label="Delete all tickets"
+                            className="border border-[#24A0B5] text-[#24A0B5] rounded-lg focus:ring-2 focus:ring-blue-500 hover:text-white hover:bg-[#24A0B5] transition-colors ease-in-out duration-300"
+                        >
+                            Delete all Tickets
+                        </Button>
+                    </div>
                     <div
                         className={`${
                             fetchedData.length > 0 ? "grid" : ""
@@ -54,6 +84,7 @@ function MyTickets() {
                             </p>
                         )}
                     </div>
+                    {isDeleteInProgress && <Spinner/>}
                 </div>
             </AnimatedSection>
         </div>

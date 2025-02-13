@@ -1,4 +1,5 @@
 import ReactDOM from "react-dom";
+import PropTypes from "prop-types";
 
 const Spinner = ({className}) => {
     const modalRoot = document.getElementById("modal-root");
@@ -17,5 +18,9 @@ const Spinner = ({className}) => {
         modalRoot
     );
 };
+
+Spinner.propTypes = {
+    className: PropTypes.string
+}
 
 export default Spinner;

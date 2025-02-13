@@ -1,7 +1,7 @@
 
+import PropTypes from "prop-types"
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import PropTypes from "prop-types"
 
 function AnimatedSection({ children, ...props }) {
     const { ref, inView } = useInView({

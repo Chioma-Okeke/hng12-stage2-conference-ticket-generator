@@ -35,7 +35,7 @@ function EventBooking() {
         parsedData.selectedTicket || {}
     );
     const [numberOfTickets, setNumberOfTickets] = useState(
-        parsedData.numberOfTickets || null
+        parsedData.numberOfTickets || 1
     );
     const [errorMessage, setErrorMessage] = useState({
         ticketSelected: "",
@@ -129,14 +129,14 @@ function EventBooking() {
     };
 
     return (
-        <section className="text-[#FAFAFA] flex flex-col gap-8 mx-auto md:p-6 max-w-[604px] rounded-[32px] md:border border-[#0E464F] md:bg-[#08252B]">
-            <div className="flex flex-col items-center sm:h-[243px] md:h-auto justify-between md:justify-start gap-8 md:gap-2 relative py-4 px-6 md:p-6 rounded-3xl border border-l-2 border-r-2 border-b-2 border-[#07373F] ticket-background">
-                <div className="flex flex-col gap-2">
+        <section className="font-roboto text-[#FAFAFA] flex flex-col gap-8 mx-auto md:p-6 max-w-[604px] rounded-[32px] md:border border-[#0E464F] md:bg-[#08252B]">
+            <div className="flex flex-col items-center h-[243px] md:h-auto justify-between md:justify-start md:gap-2 relative py-4 px-6 md:p-6 rounded-3xl border border-l-2 border-r-2 border-b-2 border-[#07373F] ticket-background">
+                <div className="flex flex-col gap-2 ">
                     <h1 className="text-center text-5xl md:text-[62px] font-roadRage leading-[62px] ">
                         Techember Fest ”25
                     </h1>
-                    <p className="text-center text-sm md:text-base max-w-[239px] md:max-w-[340px] font-roboto">
-                        Join us for an unforgettable experience at [Event Name]!
+                    <p className="text-center text-sm md:text-base max-w-[239px] md:max-w-[340px]">
+                        Join us for an unforgettable experience at Techember Fest ”25!
                         Secure your spot now.
                     </p>
                 </div>
@@ -150,7 +150,7 @@ function EventBooking() {
             <div className="flex flex-col gap-2">
                 <label id="ticketTypeLabel">Select Ticket Type:</label>
                 <div
-                    className="grid md:grid-cols-3 gap-8 md:gap-0 bg-[#052228] border border-[#07373F] p-4 rounded-3xl"
+                    className="grid md:grid-cols-3 gap-8 md:gap-5 bg-[#052228] border border-[#07373F] p-4 rounded-3xl"
                     role="radiogroup"
                     aria-labelledby="ticketTypeLabel"
                 >
@@ -163,10 +163,10 @@ function EventBooking() {
                                 onClick={() => setSelectedTicket(ticket)}
                                 role="radio"
                                 aria-checked={isSelected}
-                                className={`md:max-w-[158px] p-3 border-2 border-[#197686] rounded-xl flex flex-col gap-3 transition-colors ease-in-out duration-300 cursor-pointer hover:bg-[#2C545B] ${
+                                className={`min-h-[110px] p-3 border-[#197686] rounded-xl flex flex-col justify-between transition-colors ease-in-out duration-300 cursor-pointer hover:bg-[#2C545B] ${
                                     isSelected
-                                        ? "bg-[#12464E]"
-                                        : "bg-transparent"
+                                        ? "bg-[#12464E] border"
+                                        : "bg-transparent border-2"
                                 }`}
                             >
                                 <p className="font-semibold text-2xl leading-[26.4px] text-white">
@@ -200,6 +200,7 @@ function EventBooking() {
                         options={[1, 2, 3, 4, 5, 6, 7, 8]}
                         setNumberOfTickets={setNumberOfTickets}
                         numberOfTickets={numberOfTickets}
+                        placeholder="Select required number"
                     />
                     {errorMessage && (
                         <p
@@ -212,18 +213,18 @@ function EventBooking() {
                     )}
                 </div>
             </div>
-            <div className="flex flex-col-reverse md:flex-row gap-4 md:gap-6">
+            <div className="flex flex-col-reverse md:flex-row gap-4 md:gap-6 font-jeju">
                 <Button
                     onClick={navigateToAboutPage}
                     aria-label="Cancel and return to the about page"
-                    className="flex-1 border border-[#24A0B5] rounded-lg focus:ring-2 focus:ring-blue-500 hover:bg-[#24A0B5] transition-colors ease-in-out duration-300"
+                    className="flex-1 border border-[#24A0B5] text-[#24A0B5] rounded-lg focus:ring-2 focus:ring-blue-500 hover:text-white hover:bg-[#24A0B5] transition-colors ease-in-out duration-300"
                 >
                     Cancel
                 </Button>
                 <Button
                     onClick={nextSection}
                     aria-label="Proceed to the next section"
-                    className="flex-1 bg-[#24A0B5] rounded-lg text-white focus:ring-2 focus:ring-blue-500 hover:border hover:border-[#24A0B5] hover:bg-transparent transition-colors ease-in-out duration-300"
+                    className="flex-1 bg-[#24A0B5] rounded-lg text-white focus:ring-2 focus:ring-blue-500 hover:text-[#24A0B5] hover:border hover:border-[#24A0B5] hover:bg-transparent transition-colors ease-in-out duration-300"
                 >
                     Next
                 </Button>

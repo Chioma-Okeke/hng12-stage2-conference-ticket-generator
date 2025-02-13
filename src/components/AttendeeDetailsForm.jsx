@@ -142,18 +142,18 @@ function AttendeeDetailsForm() {
         <form
             onSubmit={handleSubmit(onSubmit)}
             noValidate
-            className="text-[#FAFAFA] font-roboto flex flex-col gap-8 mx-auto lg:p-6 max-w-[604px] rounded-[32px] lg:border border-[#0E464F] lg:bg-[#08252B]"
+            className="text-[#FAFAFA] font-roboto flex flex-col gap-8 mx-auto md:p-6 max-w-[604px] rounded-[32px] md:border border-[#0E464F] md:bg-[#08252B]"
         >
             {/* Profile Photo Upload */}
             <div>
-                <div className="relative flex flex-col gap-3 lg:gap-8 sm:h-[243px] lg:h-auto justify-between p-6 rounded-3xl border border-[#07373F] bg-[#052228]">
+                <div className="relative flex flex-col gap-3 md:gap-8 justify-between p-6 rounded-3xl border border-[#07373F] bg-[#052228]">
                     <p id="file-upload-label">
                         Upload Profile Photo <span aria-hidden="true">*</span>
                     </p>
-                    <div className="relative h-[240px] lg:flex items-center justify-center">
+                    <div className="relative h-[240px] md:flex items-center justify-center">
                         <div
                             aria-hidden="true"
-                            className="hidden lg:block w-full h-[200px] bg-black/20"
+                            className="hidden md:block w-full h-[200px] bg-black/20"
                         ></div>
                         <input
                             type="file"
@@ -175,7 +175,7 @@ function AttendeeDetailsForm() {
                                         .click();
                                 }
                             }}
-                            className="absolute left-1/2 top-0 -translate-x-1/2  h-60 w-60 rounded-[32px] border-4 border-[#24A0B5]/50 bg-[#0E464F] cursor-pointer"
+                            className="absolute left-1/2 top-0 -translate-x-1/2 w-full h-60 max-w-60 rounded-[32px] border-4 border-[#24A0B5]/50 bg-[#0E464F] cursor-pointer"
                         >
                             {preview ? (
                                 <div
@@ -310,19 +310,19 @@ function AttendeeDetailsForm() {
                     <InputError message={errors.specialRequest.message} />
                 )}
             </div>
-            <div className="flex flex-col-reverse lg:flex-row gap-4 lg:gap-6">
+            <div className="flex flex-col-reverse font-jeju lg:flex-row gap-4 lg:gap-6">
                 <Button
                     type="button"
                     onClick={previousSection}
                     aria-label="Cancel and return to ticket selection section"
-                    className="flex-1 border border-[#24A0B5] rounded-lg focus:ring-2 focus:ring-blue-500 hover:bg-[#24A0B5] transition-colors ease-in-out duration-300"
+                    className="flex-1 border border-[#24A0B5] text-[#24A0B5] rounded-lg focus:ring-2 focus:ring-blue-500 hover:text-white hover:bg-[#24A0B5] transition-colors ease-in-out duration-300"
                 >
                     Back
                 </Button>
                 <Button
                     type="submit"
                     aria-label="Proceed to conference ticket"
-                    className="flex-1 bg-[#24A0B5] rounded-lg text-white focus:ring-2 focus:ring-blue-500 hover:border hover:border-[#24A0B5] hover:bg-transparent transition-colors ease-in-out duration-300"
+                    className="flex-1 bg-[#24A0B5] rounded-lg text-white focus:ring-2 focus:ring-blue-500 hover:text-[#24A0B5] hover:border hover:border-[#24A0B5] hover:bg-transparent transition-colors ease-in-out duration-300"
                 >
                     Get My Free Ticket
                 </Button>

@@ -4,14 +4,15 @@ import barcode from "../assets/barcode.svg";
 
 function Ticket({ ticketData, userData, resultRef }) {
     return (
-        <div ref={resultRef} className="relative w-fit mx-auto">
+        <div ref={resultRef} className="relative mx-auto">
             <svg
                 aria-hidden="true"
-                width="300"
+                // width="300"
                 height="600"
                 viewBox="0 0 300 600"
                 fill="none"
                 style={{ display: "block", margin: "0 auto" }}
+                className="w-full h-auto max-w-[300px]"
                 xmlns="http://www.w3.org/2000/svg"
             >
                 <g clipPath="url(#clip0_2010_3950)">
@@ -74,11 +75,13 @@ function Ticket({ ticketData, userData, resultRef }) {
                     </clipPath>
                 </defs>
             </svg>
+
             <div
                 tabIndex={0}
+                id="ticket-content"
                 role="region"
                 aria-labelledby="ticket-heading"
-                className="p-[14px] w-[260px] h-[446px] rounded-2xl absolute top-[20px] left-[20px] border border-[#24A0B5] backdrop-blur-sm bg-[#031E211A]"
+                className="p-[14px] mx-auto w-full max-w-[260px] h-auto max-h-[446px] rounded-2xl absolute top-[20px] left-1/2 -translate-x-1/2 border border-[#24A0B5] backdrop-blur-sm bg-[#031E211A]"
             >
                 <div className="flex flex-col items-center justify-center gap-1 relative">
                     <h1
@@ -88,24 +91,25 @@ function Ticket({ ticketData, userData, resultRef }) {
                         Techember Fest ”25
                     </h1>
                     <div
-                        className="flex flex-col gap-1 items-center text-[10px] text-center"
+                        className="flex flex-col sm:gap-1 items-center text-[10px] text-center"
                         aria-label={`Location: 04 Rumens road, Ikoyi, Lagos. Date: March 15, 2025, at 7:00 PM`}
                     >
                         <span>📍 04 Rumens road, Ikoyi, Lagos</span>
                         <span>📅 March 15, 2025 | 7:00 PM</span>
                     </div>
                 </div>
-                <div className="w-fit mx-auto">
+                <div className="mx-auto">
                     <img
                         src={userData.profilePhoto}
                         alt={`Profile photo of ${userData.fullName}`}
-                        className="my-[20px] w-[140px] h-[140px] rounded-xl object-cover border-4 border-[#24A0B5]"
+                        className="my-[20px] w-full max-w-[140px] h-[140px] mx-auto rounded-xl object-cover border-4 border-[#24A0B5] profile-image"
                     />
                 </div>
                 <div
                     role="region"
+                    id="bio-container"
                     aria-labelledby="ticket-details-heading"
-                    className="font-roboto h-40 p-2 bg-[#07333c] rounded-lg border border-[#123d43] flex flex-col justify-center"
+                    className="font-roboto p-2 bg-[#07333c] rounded-lg border border-[#123d43] flex flex-col justify-center"
                 >
                     <h2 id="ticket-details-heading" className="sr-only">
                         Ticket Details
@@ -117,7 +121,7 @@ function Ticket({ ticketData, userData, resultRef }) {
                             <div className="opacity-30 text-white text-[10px] font-normal leading-[15px]">
                                 Enter your name
                             </div>
-                            <div className="text-white text-xs font-bold leading-[18px]">
+                            <div className="text-white text-xs font-bold leading-[18px] bio-data">
                                 {userData.fullName}
                             </div>
                         </div>
@@ -125,7 +129,7 @@ function Ticket({ ticketData, userData, resultRef }) {
                             <div className="opacity-30 text-white text-[10px] font-normal leading-[15px]">
                                 Enter your email *
                             </div>
-                            <div className="text-white text-xs font-bold leading-[18px] break-all">
+                            <div className="text-white text-xs font-bold leading-[18px] break-all bio-data">
                                 {userData.emailAddress}
                             </div>
                         </div>
@@ -137,7 +141,7 @@ function Ticket({ ticketData, userData, resultRef }) {
                             <div className="opacity-30 text-white text-[10px] font-normal leading-[15px]">
                                 Ticket Type:
                             </div>
-                            <div className="text-white text-[10px] font-normal leading-[15px]">
+                            <div className="text-white text-[10px] font-normal leading-[15px] bio-data">
                                 {
                                     ticketData?.selectedTicket?.accessType?.split(
                                         " "
@@ -149,7 +153,7 @@ function Ticket({ ticketData, userData, resultRef }) {
                             <div className="opacity-30 text-white text-[10px] font-normal leading-[15px]">
                                 Ticket for:
                             </div>
-                            <div className="text-white text-[10px] font-normal leading-[15px]">
+                            <div className="text-white text-[10px] font-normal leading-[15px] bio-data">
                                 {ticketData.numberOfTickets}
                             </div>
                         </div>
@@ -160,13 +164,14 @@ function Ticket({ ticketData, userData, resultRef }) {
                         <div className="opacity-30 text-white text-[10px] font-normal leading-[15px]">
                             Special request?
                         </div>
-                        <div className="text-white text-[10px] font-normal leading-[15px]">
+                        <div className="text-white text-[10px] font-normal leading-[15px] bio-data">
                             {userData.specialRequest}
                         </div>
                     </div>
                 </div>
             </div>
-            <div className="absolute bottom-[22px] left-8">
+
+            <div className="absolute bottom-[22px] left-1/2 -translate-x-1/2">
                 <img src={barcode} alt="" aria-hidden="true" />
             </div>
         </div>

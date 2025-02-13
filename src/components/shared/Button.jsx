@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-function Button({ children, className, onClick, href, as = "button", ...props }) {
+function Button({ children, className, onClick, href, ...props }) {
     const Component = href ? "a" : "button"; 
 
     return (

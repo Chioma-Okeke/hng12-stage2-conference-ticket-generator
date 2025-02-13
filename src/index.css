@@ -6,6 +6,12 @@
 @tailwind utilities;
 
 
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
  :root {
   color: rgba(128, 128, 128, 0.98); 
   background-color: #02191D;
@@ -45,5 +51,84 @@
 @media (max-width: 768px) {
   :root {
     background-image: none;
+  }
+}
+
+/* Covers 350px - 373px */
+@media (min-width: 350px) and (max-width: 373px) {
+  .ticket-padding {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+}
+
+/* Covers 337px - 349px */
+@media (min-width: 337px) and (max-width: 349px) {
+  .ticket-padding {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  #ticket-content {
+    width: 90%;
+    margin: 0 auto;
+    padding: 5px;
+  }
+}
+
+@media (min-width: 298px) and (max-width: 336px) {
+  #ticket-content {
+    width: 90%;
+    margin: 0 auto;
+    padding: 5px;
+    /* top: 8px; */
+  }
+  
+}
+
+/* Covers 337px - 373px */
+@media (min-width: 337px) and (max-width: 373px) {
+  .ticket-padding {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+
+  #ticket-content {
+    width: 90%;
+    margin: 0 auto;
+    padding: 5px;
+  }
+}
+
+/* Covers 336px and below */
+@media (max-width: 336px) {
+  .profile-image {
+    width: 30%;
+    height: auto;
+    margin: 10px auto;
+  }
+
+  #ticket-heading {
+    font-size: 16px;
+  }
+
+  #bio-container,
+  .bio-data {
+    width: 100%;
+    font-size: 10px;
+    padding: 0;
+  }
+
+  .ticket-padding {
+    padding-right: 12px;
+    padding-left: 12px;
+  }
+}
+
+/* Covers 298px and below */
+@media (max-width: 298px) {
+  #ticket-content {
+    width: 80%;
+    top: 8px;
   }
 }

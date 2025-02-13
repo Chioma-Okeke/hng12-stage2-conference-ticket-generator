@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { IoIosArrowDown } from "react-icons/io";
 import PropTypes from "prop-types";
+import { IoIosArrowDown } from "react-icons/io";
 
 function Select({ options, numberOfTickets, setNumberOfTickets, placeholder }) {
     const [isOpen, setIsOpen] = useState(false);

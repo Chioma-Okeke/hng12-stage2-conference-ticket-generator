@@ -94,9 +94,9 @@ function CreatedTicket() {
     };
 
     return (
-        <section className="text-[#FAFAFA] mx-auto max-w-[700px] rounded-3xl relative">
+        <section className="text-[#FAFAFA] mx-auto max-w-[700px] rounded-3xl relative font-roboto">
             <div className="flex flex-col items-center gap-3 lg:gap-4">
-                <h1 className="text-2xl lg:text-[32px] leading-[33.6px] lg:leading-[40.96px] text-center text-white">
+                <h1 className="text-2xl lg:text-[32px] leading-[33.6px] lg:leading-[40.96px] text-center text-white font-alatsi">
                     Your Ticket is Booked!
                 </h1>
                 <p className="font-roboto text-center text-[#FAFAFA]">
@@ -107,7 +107,7 @@ function CreatedTicket() {
             <div
                 tabIndex={0}
                 aria-label="Generated Ticket"
-                className="mt-[32px] mb-6 py-[32px]"
+                className="mt-[32px] mb-6 py-[32px] lg:px-[21px]"
             >
                 <Ticket
                     resultRef={resultRef}
@@ -115,18 +115,18 @@ function CreatedTicket() {
                     userData={fetchedUserData}
                 />
             </div>
-            <div className="flex flex-col-reverse md:flex-row gap-4 md:gap-6">
+            <div className="flex flex-col-reverse md:flex-row gap-4 md:gap-6 font-jeju">
                 <Button
                     onClick={bookAnotherTicket}
                     aria-label="Book another ticket"
-                    className="flex-1 border border-[#24A0B5] rounded-lg focus:ring-2 focus:ring-blue-500 hover:bg-[#24A0B5] transition-colors ease-in-out duration-300"
+                    className="flex-1 border border-[#24A0B5] text-[#24A0B5] rounded-lg focus:ring-2 focus:ring-blue-500 hover:text-white hover:bg-[#24A0B5] transition-colors ease-in-out duration-300"
                 >
                     Book Another Ticket
                 </Button>
                 <Button
                     onClick={downloadImage}
                     aria-label="Click to download ticket"
-                    className="flex-1 bg-[#24A0B5] rounded-lg text-white focus:ring-2 focus:ring-blue-500 hover:border hover:border-[#24A0B5] hover:bg-transparent transition-colors ease-in-out duration-300"
+                    className="flex-1 bg-[#24A0B5] rounded-lg text-white focus:ring-2 focus:ring-blue-500 hover:text-[#24A0B5] hover:border hover:border-[#24A0B5] hover:bg-transparent transition-colors ease-in-out duration-300"
                 >
                     Download Ticket
                 </Button>
