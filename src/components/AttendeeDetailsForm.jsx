@@ -44,17 +44,6 @@ function AttendeeDetailsForm() {
         return () => saveToLocalStorage.cancel();
     }, [formValues]);
 
-    // useEffect(() => {
-    //     const checkStorageClear = () => {
-    //         if (!localStorage.getItem("formData")) {
-    //             reset();
-    //         }
-    //     };
-
-    //     window.addEventListener("storage", checkStorageClear);
-    //     return () => window.removeEventListener("storage", checkStorageClear);
-    // }, []);
-
     useEffect(() => {
         const storedData = localStorage.getItem("formData");
 
