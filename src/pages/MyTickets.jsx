@@ -54,7 +54,7 @@ function MyTickets() {
 
 const TicketCard = ({ ticket }) => {
     return (
-        <div className="relative sm:w-[280px] lg:w-[350px] bg-[#07333c] border border-[#24A0B5] rounded-xl p-4 shadow-lg text-white">
+        <div className="relative sm:w-[280px] lg:w-[350px] bg-[#07333c] border border-[#24A0B5] rounded-xl p-4 shadow-lg text-white flex flex-col justify-between">
             <div className="flex flex-col items-center">
                 <h2 className="text-lg font-bold text-center">
                     {ticket.eventName || "Techember Fest '25"}
@@ -75,8 +75,8 @@ const TicketCard = ({ ticket }) => {
                 />
             </div>
 
-            <div className="bg-[#031E21] p-3 rounded-lg border border-[#12464e]">
-                <div className="flex justify-between border-b border-[#12464e] pb-2">
+            <div className="bg-[#031E21] p-3 rounded-lg border border-[rgb(18,70,78)]">
+                <div className="flex flex-col sm:flex-row gap-4  justify-between border-b border-[#12464e] pb-2">
                     <div>
                         <p className="text-xs opacity-50">Name</p>
                         <p className="text-sm font-bold">
@@ -91,7 +91,7 @@ const TicketCard = ({ ticket }) => {
                     </div>
                 </div>
 
-                <div className="flex gap-4 border-b border-[#12464e] py-2">
+                <div className="flex justify-between border-b border-[#12464e] py-2">
                     <div>
                         <p className="text-xs opacity-50">Ticket Type</p>
                         <p className="text-sm">
