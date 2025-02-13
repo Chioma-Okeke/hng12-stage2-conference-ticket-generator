@@ -12,22 +12,20 @@ import { setCurrentSection, setStepCounter } from "../redux/stepSlice";
 function Home() {
     const stepCounter = useSelector((state) => state.step.stepCounter);
     const currentSection = useSelector((state) => state.step.currentSection);
-    const methods = useForm(); // No default values initially
+    const methods = useForm();
     const dispatch = useDispatch();
 
     useEffect(() => {
         const storedFormData = localStorage.getItem("formData");
         if (storedFormData) {
-            console.log("i am the one running");
-            methods.reset(JSON.parse(storedFormData)); // Reset form with stored data
+            methods.reset(JSON.parse(storedFormData)); 
         }
     }, [methods]);
 
     useEffect(() => {
         const checkStorageClear = () => {
             if (!localStorage.getItem("formData")) {
-                methods.reset(); // Reset the form if localStorage is empty
-                console.log("i ran");
+                methods.reset(); 
             }
         };
 

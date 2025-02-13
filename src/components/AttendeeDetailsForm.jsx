@@ -53,7 +53,7 @@ function AttendeeDetailsForm() {
 
         window.addEventListener("storage", checkStorageClear);
         return () => window.removeEventListener("storage", checkStorageClear);
-    }, []);
+    }, [reset]);
 
     useEffect(() => {
         const storedData = localStorage.getItem("formData");

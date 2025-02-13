@@ -25,7 +25,7 @@ const availableTickets = [
 ];
 
 function EventBooking() {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const storedData = localStorage.getItem("Selected Ticket Details");
     const parsedData = storedData ? JSON.parse(storedData) : {};
 
@@ -35,6 +35,10 @@ function EventBooking() {
     const [numberOfTickets, setNumberOfTickets] = useState(
         parsedData.numberOfTickets || null
     );
+    const [errorMessage, setErrorMessage] = useState({
+        ticketSelected: "",
+        ticketNumber: "",
+    });
     const navigate = useNavigate();
 
     const ticketDetails = useMemo(
@@ -73,7 +77,36 @@ function EventBooking() {
         }
     }, []);
 
+    useEffect(()=> {       
+        setErrorMessage(prevErrors => ({
+            ...prevErrors,
+            ticketNumber: numberOfTickets > 0 ? "" : prevErrors.ticketNumber,
+            ticketSelected: Object.keys(selectedTicket).length > 0 ? "" : prevErrors.ticketSelected,
+        }));
+    }, [numberOfTickets, selectedTicket])
+
     const nextSection = () => {
+        let hasError = false;
+        let newErrors = { ...errorMessage };
+
+        if (numberOfTickets <= 0) {
+            newErrors.ticketNumber = "Please select number needed";
+            hasError = true;
+        } else {
+            newErrors.ticketNumber = "";
+        }
+
+        if (Object.keys(selectedTicket).length <= 0) {
+            newErrors.ticketSelected = "Please select a ticket";
+            hasError = true;
+        } else {
+            newErrors.ticketSelected = "";
+        }
+
+        setErrorMessage(newErrors);
+
+        if (hasError) return;
+
         const currentSection = {
             step: 2,
             sectionTitle: "Attendee Details",
@@ -135,15 +168,25 @@ function EventBooking() {
                         );
                     })}
                 </div>
+                {errorMessage && (
+                    <p className="text-red-500 font-semibold text-sm">
+                        {errorMessage.ticketSelected}
+                    </p>
+                )}
             </div>
             <div className="flex flex-col gap-2">
                 <p>Number of Tickets</p>
-                <div>
+                <div className="flex flex-col gap-1">
                     <Select
                         options={[1, 2, 3, 4, 5, 6, 7, 8]}
                         setNumberOfTickets={setNumberOfTickets}
                         numberOfTickets={numberOfTickets}
                     />
+                    {errorMessage && (
+                        <p className="text-red-500 font-semibold text-sm">
+                            {errorMessage.ticketNumber}
+                        </p>
+                    )}
                 </div>
             </div>
             <div className="flex flex-col-reverse md:flex-row gap-4 md:gap-6">

@@ -31,9 +31,9 @@ function MyTickets() {
     }, []);
 
     return (
-        <div className="pt-[46px] mb-[42px] mb:mb-[112px] h-screen">
+        <div className="pt-[46px] mb-[42px] mb:mb-[112px] min-h-screen">
             <AnimatedSection>
-                <div className={`${fetchedData.length > 0 ? "flex" : " block"} flex-col gap-8 text-[#FAFAFA] p-6 md:p-12 rounded-[40px] border border-[#0E464F] bg-[#08252B] md:bg-[#041E23] max-w-[800px] mx-auto`}>
+                <div className={`${fetchedData.length > 0 ? "flex" : " block"} h-screen overflow-y-auto tickets-container flex-col gap-8 text-[#FAFAFA] p-6 md:p-12 rounded-[40px] border border-[#0E464F] bg-[#08252B] md:bg-[#041E23] max-w-[1000px] mx-auto`}>
                     <h1 className="text-2xl font-bold mb-6">
                         🎟️ Your Tickets
                     </h1>

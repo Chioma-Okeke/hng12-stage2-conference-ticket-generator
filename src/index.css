@@ -19,6 +19,19 @@
   -moz-osx-font-smoothing: grayscale; */
 }
 
+.tickets-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.tickets-container::-webkit-scrollbar-thumb {
+    background: #24A0B5;
+    border-radius: 4px;
+}
+
+.tickets-container::-webkit-scrollbar-track {
+    margin: 30px 0;
+}
+
 
 
 @media (max-width: 1024px) {
