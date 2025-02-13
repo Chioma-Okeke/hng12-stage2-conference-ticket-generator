@@ -1,8 +1,9 @@
 import Logo from "../assets/logo.svg";
-import { Link, NavLink, useNavigate } from "react-router-dom";
-import RightArrow from "../assets/right-arrow.svg";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { resetStep } from "../redux/stepSlice";
+import { useState } from "react";
+import { HiArrowLongRight } from "react-icons/hi2";
 
 const navigationLinks = [
     {
@@ -22,6 +23,8 @@ const navigationLinks = [
 function NavSection() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+
+    const [isButtonHovered, setIsButtonHovered] = useState(false);
 
     const navigateToMyTickets = () => {
         navigate("/tickets");
@@ -69,10 +72,23 @@ function NavSection() {
                 </nav>
                 <button
                     onClick={navigateToMyTickets}
-                    className="font-jeju text-sm lg:text-base text-[#0A0C11] flex items-center gap-1 py-3 lg:py-4 px-4 lg:px-6 rounded-xl bg-white hover:gap-3 transition-all ease-in-out duration-300"
+                    onMouseEnter={() => setIsButtonHovered(true)}
+                    onMouseLeave={() => setIsButtonHovered(false)}
+                    className={`font-jeju text-sm lg:text-base flex items-center gap-1 py-3 lg:py-4 px-4 lg:px-6 rounded-xl transition-all ease-in-out duration-300 ${
+                        isButtonHovered
+                            ? "bg-[#24A0B5] text-[#D9D9D9]"
+                            : "bg-white text-[#0A0C11]"
+                    }`}
                 >
                     <span>MY TICKETS</span>
-                    <img src={RightArrow} alt="" />
+                    <HiArrowLongRight
+                        size={20}
+                        className={`${
+                            isButtonHovered
+                                ? " -rotate-45 text-[#D9D9D9]"
+                                : "text-[#0A0C11]"
+                        } transition-all ease-in-out duration-300`}
+                    />
                 </button>
             </div>
         </header>

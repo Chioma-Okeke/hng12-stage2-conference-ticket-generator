@@ -9,6 +9,7 @@ import axios from "axios";
 import { debounce } from "lodash";
 import { useDispatch } from "react-redux";
 import { setCurrentSection, setStepCounter } from "../redux/stepSlice";
+import Spinner from "./shared/Spinner";
 
 function AttendeeDetailsForm() {
     const {
@@ -21,7 +22,7 @@ function AttendeeDetailsForm() {
     } = useFormContext();
 
     const [preview, setPreview] = useState("");
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const [uploading, setUploading] = useState(false);
     const [showUploadIcon, setShowUploadIcon] = useState(false);
 
@@ -32,12 +33,12 @@ function AttendeeDetailsForm() {
 
     useEffect(() => {
         if (Object.keys(formValues).length === 0) return;
-    
+
         const saveToLocalStorage = debounce(() => {
             localStorage.setItem("formData", JSON.stringify(formValues));
-        }, 500); 
+        }, 500);
         saveToLocalStorage();
-    
+
         return () => saveToLocalStorage.cancel();
     }, [formValues]);
 
@@ -45,7 +46,7 @@ function AttendeeDetailsForm() {
         const checkStorageClear = () => {
             if (!localStorage.getItem("formData")) {
                 console.log("i ran");
-                reset(); 
+                reset();
             }
         };
 
@@ -120,12 +121,9 @@ function AttendeeDetailsForm() {
     const nextSection = () => {
         const currentSection = {
             step: 3,
-            sectionTitle: "Ready"
-        }
-        localStorage.setItem(
-            "Current section",
-            JSON.stringify(currentSection)
-        );
+            sectionTitle: "Ready",
+        };
+        localStorage.setItem("Current section", JSON.stringify(currentSection));
         dispatch(setCurrentSection("Ready"));
         dispatch(setStepCounter(3));
     };
@@ -149,21 +147,34 @@ function AttendeeDetailsForm() {
             {/* Profile Photo Upload */}
             <div>
                 <div className="relative flex flex-col gap-3 lg:gap-8 sm:h-[243px] lg:h-auto justify-between p-6 rounded-3xl border border-[#07373F] bg-[#052228]">
-                    <p>
-                        Upload Profile Photo <span>*</span>
+                    <p id="file-upload-label">
+                        Upload Profile Photo <span aria-hidden="true">*</span>
                     </p>
                     <div className="relative h-[240px] lg:flex items-center justify-center">
-                        <div className="hidden lg:block w-full h-[200px] bg-black/20"></div>
+                        <div
+                            aria-hidden="true"
+                            className="hidden lg:block w-full h-[200px] bg-black/20"
+                        ></div>
                         <input
                             type="file"
                             accept="image/*"
                             onChange={handleFileChange}
                             className="hidden"
                             id="fileInput"
+                            aria-describedby="file-upload-instructions"
                         />
                         <label
                             htmlFor="fileInput"
                             tabIndex={0}
+                            role="button"
+                            aria-labelledby="file-upload-label file-upload-instructions"
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter") {
+                                    document
+                                        .getElementById("fileInput")
+                                        .click();
+                                }
+                            }}
                             className="absolute left-1/2 top-0 -translate-x-1/2  h-60 w-60 rounded-[32px] border-4 border-[#24A0B5]/50 bg-[#0E464F] cursor-pointer"
                         >
                             {preview ? (
@@ -176,12 +187,26 @@ function AttendeeDetailsForm() {
                                 >
                                     <img
                                         src={preview}
-                                        alt="Preview"
+                                        tabIndex={0}
+                                        aria-label="Uploaded profile picture. Press Enter to change the image."
+                                        role="img"
+                                        alt="Uploaded preview"
+                                        onKeyDown={(e) => {
+                                            if (e.key === "Enter") {
+                                                document
+                                                    .getElementById("fileInput")
+                                                    .click();
+                                            }
+                                        }}
                                         className="w-full h-[240px] object-cover rounded-[32px]"
                                     />
                                     {showUploadIcon && (
                                         <div className="bg-black/20 absolute top-0 left-0 w-full h-full flex flex-col gap-4 justify-center items-center">
-                                            <img src={cloud} alt="cloud icon" />
+                                            <img
+                                                src={cloud}
+                                                alt="cloud icon"
+                                                aria-hidden="true"
+                                            />
                                             <p className="text-center px-6">
                                                 Drag & drop or click to upload
                                             </p>
@@ -199,9 +224,15 @@ function AttendeeDetailsForm() {
                         </label>
                     </div>
                     {uploading && (
-                        <p className="text-center text-gray-300">
-                            Uploading...
-                        </p>
+                        <div
+                            className="text-center text-gray-300 "
+                            aria-live="polite"
+                        >
+                            <Spinner />
+                            <span className="sr-only">
+                                Uploading file, please wait...
+                            </span>
+                        </div>
                     )}
                 </div>
                 {errors.profilePhoto && (
@@ -222,6 +253,7 @@ function AttendeeDetailsForm() {
                 <input
                     type="text"
                     id="fullName"
+                    aria-label="Enter your full name"
                     aria-required="true"
                     aria-invalid={errors.fullName ? "true" : "false"}
                     className="border border-[#07373F] rounded-xl p-3 bg-transparent focus:outline-none"
@@ -243,6 +275,7 @@ function AttendeeDetailsForm() {
                         type="text"
                         id="emailAddress"
                         aria-required="true"
+                        aria-label="Enter your email address"
                         aria-invalid={errors.emailAddress ? "true" : "false"}
                         placeholder="hello@avioflagos.io"
                         className="flex-1 bg-transparent placeholder:text-[#FAFAFA] focus:outline-none"
@@ -266,6 +299,7 @@ function AttendeeDetailsForm() {
                 <textarea
                     id="specialRequest"
                     aria-invalid={errors.specialRequest ? "true" : "false"}
+                    aria-label="Enter any special request you have."
                     type="text"
                     placeholder="Textarea"
                     className="border border-[#07373F] rounded-xl p-3 bg-transparent focus:outline-none"
@@ -280,13 +314,15 @@ function AttendeeDetailsForm() {
                 <Button
                     type="button"
                     onClick={previousSection}
-                    className="flex-1 border border-[#24A0B5] rounded-lg "
+                    ariaLabel="Cancel and return to ticket selection section"
+                    className="flex-1 border border-[#24A0B5] rounded-lg focus:ring-2 focus:ring-blue-500 hover:bg-[#24A0B5] transition-colors ease-in-out duration-300"
                 >
                     Back
                 </Button>
                 <Button
                     type="submit"
-                    className="flex-1 bg-[#24A0B5] rounded-lg text-white"
+                    ariaLabel="Proceed to conference ticket"
+                    className="flex-1 bg-[#24A0B5] rounded-lg text-white focus:ring-2 focus:ring-blue-500 hover:border hover:border-[#24A0B5] hover:bg-transparent transition-colors ease-in-out duration-300"
                 >
                     Get My Free Ticket
                 </Button>
@@ -304,7 +340,9 @@ function InputError({ message }) {
             transition={{ duration: 0.5 }}
             className="text-red-500 font-semibold text-sm"
         >
-            <p role="alert">{message}</p>
+            <p role="alert" aria-live="assertive">
+                {message}
+            </p>
         </motion.div>
     );
 }

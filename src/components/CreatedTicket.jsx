@@ -53,31 +53,45 @@ function CreatedTicket() {
         }
     }, []);
 
-    const bookAnotherTicket = async () => {
-        const storedTicketData = localStorage.getItem(
-            "Selected Ticket Details"
-        );
-        const storedUserData = localStorage.getItem("formData");
+    useEffect(() => {
+        const saveTicket = async () => {
+            const storedTicketData = localStorage.getItem(
+                "Selected Ticket Details"
+            );
+            const storedUserData = localStorage.getItem("formData");
 
-        if (storedTicketData && storedUserData) {
-            try {
-                const ticketData = JSON.parse(storedTicketData);
-                const userData = JSON.parse(storedUserData);
-                await saveTicketToDB({
-                    ticketData,
-                    userData,
-                    timestamp: new Date().toISOString(),
-                });
-                localStorage.removeItem("Selected Ticket Details");
-                localStorage.removeItem("formData");
-                localStorage.removeItem("Current section");
+            if (storedTicketData && storedUserData) {
+                try {
+                    const ticketData = JSON.parse(storedTicketData);
+                    const userData = JSON.parse(storedUserData);
+                    
+                    const alreadySaved = localStorage.getItem("TicketSaved");
+                    if (!alreadySaved) {
+                        await saveTicketToDB({
+                            ticketData,
+                            userData,
+                            timestamp: new Date().toISOString(),
+                        });
 
-                dispatch(setStepCounter(1));
-                dispatch(setCurrentSection("Ticket Selection"));
-            } catch (error) {
-                console.error("Error handling ticket storage:", error);
+                        localStorage.setItem("TicketSaved", "true");
+                    }
+                } catch (error) {
+                    console.error("Error saving ticket:", error);
+                }
             }
-        }
+        };
+
+        saveTicket();
+    }, []);
+
+    const bookAnotherTicket = async () => {
+        localStorage.removeItem("Selected Ticket Details");
+        localStorage.removeItem("formData");
+        localStorage.removeItem("Current section");
+        localStorage.removeItem("TicketSaved");
+
+        dispatch(setStepCounter(1));
+        dispatch(setCurrentSection("Ticket Selection"));
     };
 
     return (
@@ -91,7 +105,11 @@ function CreatedTicket() {
                     <span className="hidden lg:inline font-bold">download</span>
                 </p>
             </div>
-            <div className="mt-[32px] mb-6 py-[32px]">
+            <div
+                tabIndex={0}
+                aria-label="Generated Ticket"
+                className="mt-[32px] mb-6 py-[32px]"
+            >
                 <Ticket
                     resultRef={resultRef}
                     ticketData={fetchedTicketData}
@@ -101,19 +119,21 @@ function CreatedTicket() {
             <div className="flex flex-col-reverse md:flex-row gap-4 md:gap-6">
                 <Button
                     onClick={bookAnotherTicket}
-                    className="flex-1 border border-[#24A0B5] rounded-lg"
+                    ariaLabel="Book another ticket"
+                    className="flex-1 border border-[#24A0B5] rounded-lg focus:ring-2 focus:ring-blue-500 hover:bg-[#24A0B5] transition-colors ease-in-out duration-300"
                 >
                     Book Another Ticket
                 </Button>
                 <Button
                     onClick={downloadImage}
-                    className="flex-1 bg-[#24A0B5] rounded-lg text-white"
+                    ariaLabel="Click to download ticket"
+                    className="flex-1 bg-[#24A0B5] rounded-lg text-white focus:ring-2 focus:ring-blue-500 hover:border hover:border-[#24A0B5] hover:bg-transparent transition-colors ease-in-out duration-300"
                 >
                     Download Ticket
                 </Button>
             </div>
 
-            {isDownloadInProgress && <Spinner />}
+            {isDownloadInProgress && window.innerWidth > 1024 && <Spinner />}
         </section>
     );
 }

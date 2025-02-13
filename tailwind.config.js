@@ -16,6 +16,7 @@ export default {
                 roboto: ["Roboto", "sans-serif"],
                 sourceSerif: ["Source Serif 4", "serif"],
                 jeju: ["Jeju Myeongjo", "serif"],
+                alatsi: ["Alatsi", "serif"],
               },
         },
     },

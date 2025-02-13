@@ -5,6 +5,7 @@ function Ticket({ ticketData, userData, resultRef }) {
     return (
         <div ref={resultRef} className="relative w-fit mx-auto">
             <svg
+                aria-hidden="true"
                 width="300"
                 height="600"
                 viewBox="0 0 300 600"
@@ -72,12 +73,23 @@ function Ticket({ ticketData, userData, resultRef }) {
                     </clipPath>
                 </defs>
             </svg>
-            <div className="p-[14px] w-[260px] h-[446px] rounded-2xl absolute top-[20px] left-[20px] border border-[#24A0B5] backdrop-blur-sm bg-[#031E211A]">
+            <div
+                tabIndex={0}
+                role="region"
+                aria-labelledby="ticket-heading"
+                className="p-[14px] w-[260px] h-[446px] rounded-2xl absolute top-[20px] left-[20px] border border-[#24A0B5] backdrop-blur-sm bg-[#031E211A]"
+            >
                 <div className="flex flex-col items-center justify-center gap-1 relative">
-                    <h1 className="text-center text-[34px] font-roadRage leading-[34px] ">
+                    <h1
+                        id="ticket-heading"
+                        className="text-center text-[34px] font-roadRage leading-[34px] "
+                    >
                         Techember Fest ”25
                     </h1>
-                    <div className="flex flex-col gap-1 items-center text-[10px] text-center">
+                    <div
+                        className="flex flex-col gap-1 items-center text-[10px] text-center"
+                        aria-label={`Location: 04 Rumens road, Ikoyi, Lagos. Date: March 15, 2025, at 7:00 PM`}
+                    >
                         <span>📍 04 Rumens road, Ikoyi, Lagos</span>
                         <span>📅 March 15, 2025 | 7:00 PM</span>
                     </div>
@@ -85,11 +97,17 @@ function Ticket({ ticketData, userData, resultRef }) {
                 <div className="w-fit mx-auto">
                     <img
                         src={userData.profilePhoto}
-                        alt="user avatar"
+                        alt={`Profile photo of ${userData.fullName}`}
                         className="my-[20px] w-[140px] h-[140px] rounded-xl object-cover border-4 border-[#24A0B5]"
                     />
                 </div>
-                <div className="font-roboto h-40 p-2 bg-[#07333c] rounded-lg border border-[#123d43] flex flex-col justify-center">
+                <div
+                    role="region"
+                    aria-labelledby="ticket-details-heading"
+                    className="font-roboto h-40 p-2 bg-[#07333c] rounded-lg border border-[#123d43] flex flex-col justify-center"
+                >
+                    <h2 id="ticket-details-heading" className="sr-only">Ticket Details</h2>
+                    
                     {/* Name & Email Row */}
                     <div className="flex w-full border-b border-[#12464e]">
                         <div className="flex-1 p-1 border-r border-[#12464e] flex flex-col">
@@ -146,7 +164,7 @@ function Ticket({ ticketData, userData, resultRef }) {
                 </div>
             </div>
             <div className="absolute bottom-[22px] left-8">
-                <img src={barcode} alt="barcode" />
+                <img src={barcode} alt=""  aria-hidden="true"/>
             </div>
         </div>
     );

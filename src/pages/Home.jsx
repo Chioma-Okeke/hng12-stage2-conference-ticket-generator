@@ -51,7 +51,7 @@ function Home() {
     };
 
     return (
-        <div className="mt-[46px]">
+        <div>
             <AnimatedSection>
                 <EventContainer
                     currentSection={currentSection}
