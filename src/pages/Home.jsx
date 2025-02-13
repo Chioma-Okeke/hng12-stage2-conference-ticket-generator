@@ -6,26 +6,45 @@ import AttendeeDetailsForm from "../components/AttendeeDetailsForm";
 import { FormProvider, useForm } from "react-hook-form";
 import EventBooking from "../components/EventBooking";
 import CreatedTicket from "../components/CreatedTicket";
+import { useDispatch, useSelector } from "react-redux";
+import { setCurrentSection, setStepCounter } from "../redux/stepSlice";
 
 function Home() {
-    const [stepCounter, setStepCounter] = useState(1);
-    const [currentSection, setCurrentSection] = useState("Ticket Selection");
-    const storedFormData = localStorage.getItem("formData");
-    const defaultFormData = storedFormData ? JSON.parse(storedFormData) : {};
-    const methods = useForm({
-        defaultValues: defaultFormData,
-    });
+    const stepCounter = useSelector((state) => state.step.stepCounter);
+    const currentSection = useSelector((state) => state.step.currentSection);
+    const methods = useForm(); // No default values initially
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        const storedFormData = localStorage.getItem("formData");
+        if (storedFormData) {
+            console.log("i am the one running");
+            methods.reset(JSON.parse(storedFormData)); // Reset form with stored data
+        }
+    }, [methods]);
+
+    useEffect(() => {
+        const checkStorageClear = () => {
+            if (!localStorage.getItem("formData")) {
+                methods.reset(); // Reset the form if localStorage is empty
+                console.log("i ran");
+            }
+        };
+
+        window.addEventListener("storage", checkStorageClear);
+        return () => window.removeEventListener("storage", checkStorageClear);
+    }, [methods]);
 
     useEffect(() => {
         window.scrollTo(0, { top: 0, behavior: "smooth" });
 
         const currentSection = localStorage.getItem("Current section");
         if (currentSection) {
-            const data = JSON.parse(currentSection)
-            setStepCounter(data.step)
-            setCurrentSection(data.sectionTitle)
+            const data = JSON.parse(currentSection);
+            dispatch(setStepCounter(data.step));
+            dispatch(setCurrentSection(data.sectionTitle));
         }
-    }, []);
+    }, [dispatch]);
 
     const stepVariants = {
         initial: { opacity: 0.2, x: 50 },
@@ -52,21 +71,13 @@ function Home() {
                         >
                             {stepCounter === 1 && (
                                 <>
-                                    <EventBooking
-                                        setStepCounter={setStepCounter}
-                                        setCurrentSection={setCurrentSection}
-                                    />
+                                    <EventBooking />
                                 </>
                             )}
                             {stepCounter === 2 && (
                                 <>
                                     <FormProvider {...methods}>
-                                        <AttendeeDetailsForm
-                                            setStepCounter={setStepCounter}
-                                            setCurrentSection={
-                                                setCurrentSection
-                                            }
-                                        />
+                                        <AttendeeDetailsForm />
                                     </FormProvider>
                                 </>
                             )}

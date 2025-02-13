@@ -3,6 +3,8 @@ import Select from "./shared/Select";
 import Button from "./shared/Button";
 import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setCurrentSection, setStepCounter } from "../redux/stepSlice";
 
 const availableTickets = [
     {
@@ -22,7 +24,8 @@ const availableTickets = [
     },
 ];
 
-function EventBooking({ setStepCounter, setCurrentSection }) {
+function EventBooking() {
+    const dispatch = useDispatch()
     const storedData = localStorage.getItem("Selected Ticket Details");
     const parsedData = storedData ? JSON.parse(storedData) : {};
 
@@ -81,8 +84,8 @@ function EventBooking({ setStepCounter, setCurrentSection }) {
             JSON.stringify(ticketDetails)
         );
         localStorage.setItem("Current section", JSON.stringify(currentSection));
-        setCurrentSection("Attendee Details");
-        setStepCounter(2);
+        dispatch(setCurrentSection("Attendee Details"));
+        dispatch(setStepCounter(2));
     };
 
     return (

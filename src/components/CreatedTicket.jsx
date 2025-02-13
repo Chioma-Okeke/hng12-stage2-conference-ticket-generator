@@ -5,8 +5,11 @@ import { useEffect, useRef, useState } from "react";
 import { toPng } from "html-to-image";
 import Spinner from "./shared/Spinner";
 import { saveTicketToDB } from "../utils/storage";
+import { useDispatch } from "react-redux";
+import { setCurrentSection, setStepCounter } from "../redux/stepSlice";
 
-function CreatedTicket({ setStepCounter, setCurrentSection }) {
+function CreatedTicket() {
+    const dispatch = useDispatch();
     const [fetchedUserData, setFetchedUserData] = useState({});
     const [fetchedTicketData, setFetchedTicketData] = useState({});
     const resultRef = useRef(null);
@@ -69,8 +72,8 @@ function CreatedTicket({ setStepCounter, setCurrentSection }) {
                 localStorage.removeItem("formData");
                 localStorage.removeItem("Current section");
 
-                setStepCounter(1);
-                setCurrentSection("Ticket Selection");
+                dispatch(setStepCounter(1));
+                dispatch(setCurrentSection("Ticket Selection"));
             } catch (error) {
                 console.error("Error handling ticket storage:", error);
             }

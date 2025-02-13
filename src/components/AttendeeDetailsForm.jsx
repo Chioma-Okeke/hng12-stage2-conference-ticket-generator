@@ -6,8 +6,11 @@ import envelop from "../assets/envelop.svg";
 import cloud from "../assets/cloud.svg";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { debounce } from "lodash";
+import { useDispatch } from "react-redux";
+import { setCurrentSection, setStepCounter } from "../redux/stepSlice";
 
-function AttendeeDetailsForm({ setStepCounter, setCurrentSection }) {
+function AttendeeDetailsForm() {
     const {
         register,
         handleSubmit,
@@ -18,6 +21,7 @@ function AttendeeDetailsForm({ setStepCounter, setCurrentSection }) {
     } = useFormContext();
 
     const [preview, setPreview] = useState("");
+    const dispatch = useDispatch()
     const [uploading, setUploading] = useState(false);
     const [showUploadIcon, setShowUploadIcon] = useState(false);
 
@@ -27,22 +31,38 @@ function AttendeeDetailsForm({ setStepCounter, setCurrentSection }) {
     }, []);
 
     useEffect(() => {
-        const nonEmptyFormValues =
-            Object.keys(formValues).length > 0 ? formValues : null;
-
-        if (nonEmptyFormValues) {
+        if (Object.keys(formValues).length === 0) return; // Prevent storing empty objects
+    
+        const saveToLocalStorage = debounce(() => {
             localStorage.setItem("formData", JSON.stringify(formValues));
-            console.log("Updated form data:", formValues);
-        }
+            // console.log("Updated form data:", formValues);
+        }, 500); // Delay updates by 500ms
+    
+        saveToLocalStorage();
+    
+        return () => saveToLocalStorage.cancel(); // Cleanup on unmount
     }, [formValues]);
 
     useEffect(() => {
+        const checkStorageClear = () => {
+            if (!localStorage.getItem("formData")) {
+                console.log("i ran");
+                reset(); // Reset the form if localStorage is empty
+            }
+        };
+
+        window.addEventListener("storage", checkStorageClear);
+        return () => window.removeEventListener("storage", checkStorageClear);
+    }, []);
+
+    useEffect(() => {
         const storedData = localStorage.getItem("formData");
+        // const storedStep = localStorage.getItem("Current section");
 
         if (storedData && storedData !== "{}") {
             try {
                 const parsedData = JSON.parse(storedData);
-                console.log("Restoring form data:", parsedData);
+                // console.log("Restoring form data:", parsedData);
 
                 setPreview(parsedData.profilePhoto); // Set state first
                 reset(parsedData); // Then reset form with stored values
@@ -50,6 +70,17 @@ function AttendeeDetailsForm({ setStepCounter, setCurrentSection }) {
                 console.error("Error parsing form data:", error);
             }
         }
+
+        // if (storedStep) {
+        //     try {
+        //         const parsedStep = JSON.parse(storedStep);
+        //         console.log("Restoring step:", parsedStep);
+        //         setStepCounter(parsedStep.step); 
+        //         setCurrentSection(parsedStep.sectionTitle);
+        //     } catch (error) {
+        //         console.error("Error parsing step data:", error);
+        //     }
+        // }
     }, []);
 
     const handleFileChange = async (event) => {
@@ -93,7 +124,7 @@ function AttendeeDetailsForm({ setStepCounter, setCurrentSection }) {
         try {
             console.log(data);
             localStorage.setItem("formData", JSON.stringify(data));
-            // reset();
+            reset();
             nextSection();
         } catch (error) {
             console.error(error);
@@ -110,18 +141,18 @@ function AttendeeDetailsForm({ setStepCounter, setCurrentSection }) {
             "Current section",
             JSON.stringify(currentSection)
         );
-        setCurrentSection("Ready");
-        setStepCounter(3);
+        dispatch(setCurrentSection("Ready"));
+        dispatch(setStepCounter(3));
     };
 
     const previousSection = () => {
-        setCurrentSection("Ticket Selection");
-        setStepCounter(1);
         const currentSection = {
             step: 1,
             sectionTitle: "Ticket Selection",
         };
         localStorage.setItem("Current section", JSON.stringify(currentSection));
+        dispatch(setCurrentSection("Ticket Selection"));
+        dispatch(setStepCounter(1));
     };
 
     return (
@@ -262,6 +293,7 @@ function AttendeeDetailsForm({ setStepCounter, setCurrentSection }) {
             </div>
             <div className="flex flex-col-reverse lg:flex-row gap-4 lg:gap-6">
                 <Button
+                    type="button"
                     onClick={previousSection}
                     className="flex-1 border border-[#24A0B5] rounded-lg "
                 >

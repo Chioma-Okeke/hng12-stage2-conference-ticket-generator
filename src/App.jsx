@@ -2,6 +2,8 @@ import PageLayout from "./layout/PageLayout";
 import AboutProject from "./pages/AboutProject";
 import ErrorPage from "./pages/ErrorPage";
 import Home from "./pages/Home"
+import { Provider } from "react-redux";
+import store from "./redux/store";
 
 import {
     createBrowserRouter,
@@ -32,7 +34,9 @@ const router = createBrowserRouter(
 function App() {
     return (
         <div>
+            <Provider store={store}>
             <RouterProvider router={router}></RouterProvider>
+            </Provider>
         </div>
     );
 }
