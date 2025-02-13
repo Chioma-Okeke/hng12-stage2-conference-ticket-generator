@@ -2,7 +2,6 @@ const DB_NAME = "TicketDB";
 const STORE_NAME = "tickets";
 const DB_VERSION = 1;
 
-// Open IndexedDB
 export const openDB = () => {
     return new Promise((resolve, reject) => {
         const request = indexedDB.open(DB_NAME, DB_VERSION);
@@ -19,7 +18,6 @@ export const openDB = () => {
     });
 };
 
-// Save data to IndexedDB
 export const saveTicketToDB = async (ticketData) => {
     try {
         const db = await openDB();
@@ -31,7 +29,6 @@ export const saveTicketToDB = async (ticketData) => {
     }
 };
 
-// Retrieve all tickets
 export const getTicketsFromDB = async () => {
     try {
         const db = await openDB();
@@ -48,7 +45,6 @@ export const getTicketsFromDB = async () => {
     }
 };
 
-// Clear IndexedDB (if needed)
 export const clearTicketsDB = async () => {
     try {
         const db = await openDB();

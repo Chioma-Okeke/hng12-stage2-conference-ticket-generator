@@ -120,7 +120,6 @@ function AboutProject() {
                         Design File
                     </Button>
                     <Button
-                        // onClick={nextSection}
                         className="flex-1 bg-[#24A0B5] rounded-lg text-white"
                     >
                         Github code

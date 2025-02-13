@@ -1,5 +1,4 @@
 import { useState } from "react";
-// import { Check } from "lucide-react";
 import { IoIosArrowDown } from "react-icons/io";
 import PropTypes from "prop-types";
 
@@ -47,7 +46,9 @@ const Select = ({ options, placeholder = "Select an option", numberOfTickets, se
 
 Select.propTypes = {
     options: PropTypes.array,
-    placeholder: PropTypes.string
+    placeholder: PropTypes.string,
+    numberOfTickets: PropTypes.number,
+    setNumberOfTickets: PropTypes.func
 };
 
 export default Select;

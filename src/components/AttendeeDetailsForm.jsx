@@ -25,29 +25,27 @@ function AttendeeDetailsForm() {
     const [uploading, setUploading] = useState(false);
     const [showUploadIcon, setShowUploadIcon] = useState(false);
 
-    const formValues = watch(); // Watch all form fields
+    const formValues = watch();
     useEffect(() => {
         window.scrollTo(0, { top: 0, behavior: "smooth" });
     }, []);
 
     useEffect(() => {
-        if (Object.keys(formValues).length === 0) return; // Prevent storing empty objects
+        if (Object.keys(formValues).length === 0) return;
     
         const saveToLocalStorage = debounce(() => {
             localStorage.setItem("formData", JSON.stringify(formValues));
-            // console.log("Updated form data:", formValues);
-        }, 500); // Delay updates by 500ms
-    
+        }, 500); 
         saveToLocalStorage();
     
-        return () => saveToLocalStorage.cancel(); // Cleanup on unmount
+        return () => saveToLocalStorage.cancel();
     }, [formValues]);
 
     useEffect(() => {
         const checkStorageClear = () => {
             if (!localStorage.getItem("formData")) {
                 console.log("i ran");
-                reset(); // Reset the form if localStorage is empty
+                reset(); 
             }
         };
 
@@ -57,36 +55,23 @@ function AttendeeDetailsForm() {
 
     useEffect(() => {
         const storedData = localStorage.getItem("formData");
-        // const storedStep = localStorage.getItem("Current section");
 
         if (storedData && storedData !== "{}") {
             try {
                 const parsedData = JSON.parse(storedData);
-                // console.log("Restoring form data:", parsedData);
 
-                setPreview(parsedData.profilePhoto); // Set state first
-                reset(parsedData); // Then reset form with stored values
+                setPreview(parsedData.profilePhoto);
+                reset(parsedData);
             } catch (error) {
                 console.error("Error parsing form data:", error);
             }
         }
-
-        // if (storedStep) {
-        //     try {
-        //         const parsedStep = JSON.parse(storedStep);
-        //         console.log("Restoring step:", parsedStep);
-        //         setStepCounter(parsedStep.step); 
-        //         setCurrentSection(parsedStep.sectionTitle);
-        //     } catch (error) {
-        //         console.error("Error parsing step data:", error);
-        //     }
-        // }
     }, []);
 
     const handleFileChange = async (event) => {
         const file = event.target.files[0];
         if (file) {
-            const newPreview = URL.createObjectURL(file); // Always use new file
+            const newPreview = URL.createObjectURL(file);
             setPreview(newPreview);
 
             await uploadToCloudinary(file);
