@@ -33,8 +33,8 @@ function MyTickets() {
     return (
         <div className="pt-[46px] mb-[42px] mb:mb-[112px] h-screen">
             <AnimatedSection>
-                <div className="flex flex-col gap-8 p-6 md:p-12 rounded-[40px] border border-[#0E464F] bg-[#08252B] md:bg-[#041E23] max-w-[800px] mx-auto">
-                    <h1 className="text-2xl font-bold text-white mb-6">
+                <div className={`${fetchedData.length > 0 ? "flex" : " block"} flex-col gap-8 text-[#FAFAFA] p-6 md:p-12 rounded-[40px] border border-[#0E464F] bg-[#08252B] md:bg-[#041E23] max-w-[800px] mx-auto`}>
+                    <h1 className="text-2xl font-bold mb-6">
                         🎟️ Your Tickets
                     </h1>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mx-auto">
@@ -43,7 +43,7 @@ function MyTickets() {
                                 <TicketCard key={index} ticket={ticket} />
                             ))
                         ) : (
-                            <p className="text-gray-400">No tickets found.</p>
+                            <p className="text-center">No tickets found.</p>
                         )}
                     </div>
                 </div>
