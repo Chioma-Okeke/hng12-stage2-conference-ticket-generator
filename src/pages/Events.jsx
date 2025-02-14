@@ -1,5 +1,5 @@
 import { FaArrowRightLong } from "react-icons/fa6";
-import TicketCard from "../components/TicketCard";
+import EventCard from "../components/EventCard";
 import AnimatedSection from "../components/shared/AnimatedSection";
 import { useNavigate } from "react-router-dom";
 
@@ -63,7 +63,7 @@ function Events() {
                     >
                         {events.map((event, index) => {
                             return (
-                                <TicketCard
+                                <EventCard
                                     key={index}
                                     event={event}
                                     register={() => registerForEvent(event)}

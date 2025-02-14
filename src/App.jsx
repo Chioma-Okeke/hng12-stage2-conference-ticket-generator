@@ -13,6 +13,7 @@ import {
 } from "react-router-dom";
 import MyTickets from "./pages/MyTickets";
 import Events from "./pages/Events";
+import IndividualTicket from "./pages/individualTicket";
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -26,6 +27,7 @@ const router = createBrowserRouter(
                 <Route path=":event" element={<Registration />} />
                 <Route path="aboutproject" element={<AboutProject />} />
                 <Route path="tickets" element={<MyTickets />} />
+                <Route path="individualticket" element={<IndividualTicket />} />
 
                 <Route path="*" element />
             </Route>

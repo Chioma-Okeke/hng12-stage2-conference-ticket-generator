@@ -1,38 +1,85 @@
 import PropTypes from "prop-types";
-import React from "react";
+import barcode from "../assets/barcode.svg";
 
-function TicketCard({ event, cardClass, register }) {
+const TicketCard = ({ ticket, viewTicket }) => {
     return (
         <div
-        tabIndex={0}
-        onKeyDown={(e) => {
-            e.key === "Enter" && register()
-        }}
-            onClick={register}
-            className={`flex flex-col items-center sm:h-[243px] md:h-auto justify-between md:justify-start gap-4 md:gap-2 relative py-4 px-3 sm:px-6 md:p-6 rounded-3xl border border-l-2 border-r-2 border-b-2 border-[#07373F] ticket-background ${cardClass}`}
+            tabIndex={0}
+            onKeyDown={(e) => e.key === "Enter" && viewTicket()}
+            onClick={viewTicket}
+            className="relative cursor-pointer sm:w-[280px] lg:w-[350px] bg-[#07333c] border border-[#24A0B5] hover:border-2 rounded-xl p-4 shadow-lg text-white flex flex-col justify-between"
         >
-            <div className="flex flex-col sm:gap-2 event-name-card">
-                <h1 className="text-center text-5xl md:text-[62px] font-roadRage leading-[62px] ">
-                    {event.name}
-                </h1>
-                <p className="text-center text-sm sm:text-base max-w-[239px] sm:max-w-[340px]">
-                    {`Join us for an unforgettable experience at ${event.name}
-                     Secure your spot now.`}
+            <div className="flex flex-col items-center">
+                <h2 className="text-lg font-bold text-center">
+                    {ticket.eventName || "Techember Fest '25"}
+                </h2>
+                <p className="text-sm opacity-80">
+                    📍 {ticket.location || "04 Rumens Road, Ikoyi, Lagos"}
+                </p>
+                <p className="text-sm opacity-80">
+                    📅 {ticket.date || "March 15, 2025 | 7:00 PM"}
                 </p>
             </div>
-            <div className="flex flex-col md:flex-row gap-1 sm:gap-4 items-center text-sm sm:text-base">
-                <span>📍 {event.location}</span>
-                <span className="hidden md:block">| |</span>
-                <span>{event.date}</span>
+
+            <div className="w-full flex justify-center my-4">
+                <img
+                    src={ticket?.userData?.profilePhoto}
+                    alt="User Avatar"
+                    className="w-24 h-24 rounded-full object-cover border-2 border-[#24A0B5]"
+                />
+            </div>
+
+            <div className="bg-[#031E21] p-3 rounded-lg border border-[rgb(18,70,78)]">
+                <div className="flex flex-col sm:flex-row gap-4  justify-between border-b border-[#12464e] pb-2">
+                    <div>
+                        <p className="text-xs opacity-50">Name</p>
+                        <p className="text-sm font-bold">
+                            {ticket.userData.fullName}
+                        </p>
+                    </div>
+                    <div>
+                        <p className="text-xs opacity-50">Email</p>
+                        <p className="text-sm font-bold break-all">
+                            {ticket.userData.emailAddress}
+                        </p>
+                    </div>
+                </div>
+
+                <div className="flex justify-between border-b border-[#12464e] py-2">
+                    <div>
+                        <p className="text-xs opacity-50">Ticket Type</p>
+                        <p className="text-sm">
+                            {ticket?.ticketData?.selectedTicket?.accessType}
+                        </p>
+                    </div>
+                    <div>
+                        <p className="text-xs opacity-50">Quantity</p>
+                        <p className="text-sm">
+                            {ticket.ticketData.numberOfTickets}
+                        </p>
+                    </div>
+                </div>
+
+                {ticket.userData.specialRequest && (
+                    <div className="pt-2">
+                        <p className="text-xs opacity-50">Special Request</p>
+                        <p className="text-sm">
+                            {ticket.userData.specialRequest}
+                        </p>
+                    </div>
+                )}
+            </div>
+
+            <div className="flex justify-center mt-4">
+                <img src={barcode} alt="barcode" className="w-24" />
             </div>
         </div>
     );
-}
-
-TicketCard.propTypes = {
-    event: PropTypes.object,
-    cardClass: PropTypes.string,
-    register: PropTypes.func
 };
 
-export default TicketCard;
+TicketCard.propTypes = {
+    ticket: PropTypes.object,
+    viewTicket: PropTypes.func,
+};
+
+export default TicketCard

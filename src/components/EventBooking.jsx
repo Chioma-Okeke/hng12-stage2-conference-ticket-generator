@@ -7,7 +7,7 @@ import Select from "./shared/Select";
 import Button from "./shared/Button";
 import { clearLocalStorage } from "../utils/storage";
 import { setCurrentSection, setStepCounter } from "../redux/stepSlice";
-import TicketCard from "./TicketCard";
+import EventCard from "./EventCard";
 
 const availableTickets = [
     {
@@ -131,7 +131,7 @@ function EventBooking({ event }) {
 
     return (
         <section className="font-roboto text-[#FAFAFA] flex flex-col gap-8 mx-auto md:p-6 max-w-[604px] rounded-[32px] md:border border-[#0E464F] md:bg-[#08252B]">
-            <TicketCard event={event} />
+            <EventCard event={event} />
             <hr className="border- w-full border-[#07373F]" />
             <div className="flex flex-col gap-2">
                 <label id="ticketTypeLabel">Select Ticket Type:</label>
@@ -222,7 +222,7 @@ function EventBooking({ event }) {
 EventBooking.propTypes = {
     setStepCounter: PropTypes.func,
     setCurrentSection: PropTypes.func,
-    event: PropTypes.object
+    event: PropTypes.object,
 };
 
 export default EventBooking;

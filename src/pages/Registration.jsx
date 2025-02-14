@@ -1,4 +1,4 @@
-import { use, useEffect } from "react";
+import { useEffect } from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { FormProvider, useForm } from "react-hook-form";
 import { motion, AnimatePresence } from "framer-motion";
