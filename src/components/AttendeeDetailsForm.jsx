@@ -59,6 +59,19 @@ function AttendeeDetailsForm() {
         }
     }, []);
 
+    const handleDrop = async (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const file = e.dataTransfer.files[0];
+        if (file) {
+            const newPreview = URL.createObjectURL(file);
+            setPreview(newPreview);
+
+            await uploadToCloudinary(file);
+        }
+    };
+
     const handleFileChange = async (event) => {
         const file = event.target.files[0];
         if (file) {
@@ -139,7 +152,12 @@ function AttendeeDetailsForm() {
                     <p id="file-upload-label">
                         Upload Profile Photo <span aria-hidden="true">*</span>
                     </p>
-                    <div className="relative h-[240px] md:flex items-center justify-center">
+                    <div
+                        onDragOver={(e) => e.preventDefault()}
+                        onDragEnter={(e) => e.preventDefault()}
+                        onDrop={handleDrop}
+                        className="relative h-[240px] md:flex items-center justify-center curs"
+                    >
                         <div
                             aria-hidden="true"
                             className="hidden md:block w-full h-[200px] bg-black/20"
