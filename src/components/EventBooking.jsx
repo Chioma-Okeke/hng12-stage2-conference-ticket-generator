@@ -125,6 +125,7 @@ function EventBooking({ event }) {
             JSON.stringify(ticketDetails)
         );
         localStorage.setItem("Current section", JSON.stringify(currentSection));
+        localStorage.setItem("selectedEvent", JSON.stringify(event))
         dispatch(setCurrentSection("Attendee Details"));
         dispatch(setStepCounter(2));
     };

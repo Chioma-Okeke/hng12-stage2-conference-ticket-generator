@@ -14,6 +14,7 @@ function CreatedTicket() {
     const dispatch = useDispatch();
     const [fetchedUserData, setFetchedUserData] = useState({});
     const [fetchedTicketData, setFetchedTicketData] = useState({});
+    const [fetchedEventData, setFetchedEventData] = useState({})
     const resultRef = useRef(null);
     const navigate = useNavigate()
     const [isDownloadInProgress, setIsDownloadInProgress] = useState(false);
@@ -43,14 +44,18 @@ function CreatedTicket() {
     useEffect(() => {
         const storedData = localStorage.getItem("formData");
         const ticketData = localStorage.getItem("Selected Ticket Details");
+        const eventData = localStorage.getItem("selectedEvent")
 
-        if (storedData && ticketData) {
+        if (storedData && ticketData && eventData) {
             try {
                 const user = JSON.parse(storedData);
                 const ticket = JSON.parse(ticketData);
+                const event = JSON.parse(eventData)
+                console.log(ticket, "here 2")
 
                 setFetchedUserData(user);
                 setFetchedTicketData(ticket);
+                setFetchedEventData(event)
             } catch (error) {
                 console.error("Error parsing form data:", error);
             }
@@ -63,17 +68,20 @@ function CreatedTicket() {
                 "Selected Ticket Details"
             );
             const storedUserData = localStorage.getItem("formData");
+            const storedEventData = localStorage.getItem("selectedEvent")
 
             if (storedTicketData && storedUserData && currentSection === "Ready") {
                 try {
                     const ticketData = JSON.parse(storedTicketData);
                     const userData = JSON.parse(storedUserData);
+                    const eventData = JSON.parse(storedEventData)
 
                     const alreadySaved = localStorage.getItem("TicketSaved");
                     if (!alreadySaved) {
                         await saveTicketToDB({
                             ticketData,
                             userData,
+                            eventData,
                             timestamp: new Date().toISOString(),
                         });
 
@@ -114,6 +122,7 @@ function CreatedTicket() {
                     resultRef={resultRef}
                     ticketData={fetchedTicketData}
                     userData={fetchedUserData}
+                    eventData={fetchedEventData}
                 />
             </div>
             <div className="flex flex-col-reverse md:flex-row gap-4 md:gap-6 font-jeju">

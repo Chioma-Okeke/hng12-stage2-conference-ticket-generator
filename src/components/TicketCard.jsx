@@ -11,13 +11,13 @@ const TicketCard = ({ ticket, viewTicket }) => {
         >
             <div className="flex flex-col items-center">
                 <h2 className="text-lg font-bold text-center">
-                    {ticket.eventName || "Techember Fest '25"}
+                    {ticket?.eventData?.name || "Techember Fest '25"}
                 </h2>
                 <p className="text-sm opacity-80">
-                    📍 {ticket.location || "04 Rumens Road, Ikoyi, Lagos"}
+                    📍 {ticket?.eventData?.location || "04 Rumens Road, Ikoyi, Lagos"}
                 </p>
                 <p className="text-sm opacity-80">
-                    📅 {ticket.date || "March 15, 2025 | 7:00 PM"}
+                    📅 {ticket?.eventData?.date || "March 15, 2025 | 7:00 PM"}
                 </p>
             </div>
 

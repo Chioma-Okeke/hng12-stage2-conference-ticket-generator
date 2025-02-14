@@ -9,7 +9,10 @@ export const openDB = () => {
         request.onupgradeneeded = (event) => {
             const db = event.target.result;
             if (!db.objectStoreNames.contains(STORE_NAME)) {
-                db.createObjectStore(STORE_NAME, { keyPath: "id", autoIncrement: true });
+                db.createObjectStore(STORE_NAME, {
+                    keyPath: "id",
+                    autoIncrement: true,
+                });
             }
         };
 
@@ -61,4 +64,5 @@ export const clearLocalStorage = async () => {
     localStorage.removeItem("formData");
     localStorage.removeItem("Current section");
     localStorage.removeItem("TicketSaved");
-}
+    localStorage.removeItem("selectedEvent");
+};

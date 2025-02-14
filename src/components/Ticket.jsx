@@ -2,12 +2,12 @@ import PropTypes from "prop-types";
 
 import barcode from "../assets/barcode.svg";
 
-function Ticket({ ticketData, userData, resultRef }) {
+function Ticket({ ticketData, userData, resultRef, eventData }) {
+    console.log(eventData, "here")
     return (
         <div ref={resultRef} className="relative mx-auto">
             <svg
                 aria-hidden="true"
-                // width="300"
                 height="600"
                 viewBox="0 0 300 600"
                 fill="none"
@@ -88,14 +88,14 @@ function Ticket({ ticketData, userData, resultRef }) {
                         id="ticket-heading"
                         className="text-center text-[34px] font-roadRage leading-[34px] "
                     >
-                        Techember Fest ”25
+                        {eventData?.name}
                     </h1>
                     <div
                         className="flex flex-col sm:gap-1 items-center text-[10px] text-center"
                         aria-label={`Location: 04 Rumens road, Ikoyi, Lagos. Date: March 15, 2025, at 7:00 PM`}
                     >
-                        <span>📍 04 Rumens road, Ikoyi, Lagos</span>
-                        <span>📅 March 15, 2025 | 7:00 PM</span>
+                        <span>📍 {eventData?.location}</span>
+                        <span>📅 {eventData?.date}</span>
                     </div>
                 </div>
                 <div className="mx-auto">
@@ -182,6 +182,7 @@ Ticket.propTypes = {
     ticketData: PropTypes.object,
     userData: PropTypes.object,
     resultRef: PropTypes.node,
+    eventData: PropTypes.object
 };
 
 export default Ticket;

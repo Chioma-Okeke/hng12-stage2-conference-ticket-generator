@@ -65,6 +65,7 @@ function IndividualTicket() {
                         resultRef={resultRef}
                         ticketData={ticket?.ticketData}
                         userData={ticket?.userData}
+                        eventData={ticket?.eventData}
                     />
                     <div className="flex font-jeju mt-8 w-full md:w-[50%] mx-auto">
                         <Button
