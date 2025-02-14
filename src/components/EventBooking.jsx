@@ -150,7 +150,7 @@ function EventBooking() {
             <div className="flex flex-col gap-2">
                 <label id="ticketTypeLabel">Select Ticket Type:</label>
                 <div
-                    className="grid md:grid-cols-3 gap-8 md:gap-5 bg-[#052228] border border-[#07373F] p-4 rounded-3xl"
+                    className="grid md:grid-cols-3 gap-8 md:gap-4 bg-[#052228] border border-[#07373F] p-4 rounded-3xl"
                     role="radiogroup"
                     aria-labelledby="ticketTypeLabel"
                 >
@@ -169,7 +169,7 @@ function EventBooking() {
                                         : "bg-transparent border-2"
                                 }`}
                             >
-                                <p className="font-semibold text-2xl leading-[26.4px] text-white">
+                                <p className="text-start font-semibold text-2xl leading-[26.4px] text-white">
                                     {ticket.fee}
                                 </p>
                                 <div className="text-start">

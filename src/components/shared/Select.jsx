@@ -9,7 +9,7 @@ function Select({ options, numberOfTickets, setNumberOfTickets, placeholder }) {
     const toggleDropdown = () => {
         setIsOpen((prev) => !prev);
         setFocusedIndex(-1);
-    };}
+    };
 
     return (
         <div className="relative w-full text-white">

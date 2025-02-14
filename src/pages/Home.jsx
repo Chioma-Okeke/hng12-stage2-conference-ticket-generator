@@ -15,9 +15,11 @@ function Home() {
     const currentSection = useSelector((state) => state.step.currentSection);
     const methods = useForm();
     const dispatch = useDispatch();
+    console.log(methods, "methods on initial load")
 
     useEffect(() => {
         const storedFormData = localStorage.getItem("formData");
+        console.log(methods, "methods when trying to fetch from local storage")
         if (storedFormData) {
             methods.reset(JSON.parse(storedFormData));
         }
@@ -27,6 +29,7 @@ function Home() {
         const checkStorageClear = () => {
             if (!localStorage.getItem("formData")) {
                 methods.reset();
+                console.log(methods, "methods when supposedly cleared")
             }
         };
 
