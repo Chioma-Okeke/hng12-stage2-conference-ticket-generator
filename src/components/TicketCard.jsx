@@ -4,6 +4,10 @@ import React from "react";
 function TicketCard({ event, cardClass, register }) {
     return (
         <div
+        tabIndex={0}
+        onKeyDown={(e) => {
+            e.key === "Enter" && register()
+        }}
             onClick={register}
             className={`flex flex-col items-center sm:h-[243px] md:h-auto justify-between md:justify-start gap-4 md:gap-2 relative py-4 px-3 sm:px-6 md:p-6 rounded-3xl border border-l-2 border-r-2 border-b-2 border-[#07373F] ticket-background ${cardClass}`}
         >
