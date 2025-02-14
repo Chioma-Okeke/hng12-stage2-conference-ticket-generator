@@ -14,6 +14,7 @@ import {
 import MyTickets from "./pages/MyTickets";
 import Events from "./pages/Events";
 import IndividualTicket from "./pages/individualTicket";
+import NotFoundPage from "./pages/NotFound"
 
 const router = createBrowserRouter(
     createRoutesFromElements(
@@ -29,7 +30,7 @@ const router = createBrowserRouter(
                 <Route path="tickets" element={<MyTickets />} />
                 <Route path="individualticket" element={<IndividualTicket />} />
 
-                <Route path="*" element />
+                <Route path="*" element={<NotFoundPage/>} />
             </Route>
         </Route>
     )
