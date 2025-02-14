@@ -48,11 +48,14 @@ function MyTickets() {
         }
     };
 
-    const openTicket = useCallback((ticket) => {
-        navigate("/individualticket", {
-            state: { ticket },
-        });
-    }, [navigate]);
+    const openTicket = useCallback(
+        (ticket) => {
+            navigate("/individualticket", {
+                state: { ticket },
+            });
+        },
+        [navigate]
+    );
 
     return (
         <div className="pt-[46px] mb-[42px] mb:mb-[112px] min-h-screen">
@@ -88,7 +91,7 @@ function MyTickets() {
                                 <TicketCard
                                     key={index}
                                     ticket={ticket}
-                                    viewTicket={() => openTicket(ticket)}
+                                    viewTicket={openTicket}
                                 />
                             ))
                         ) : (
@@ -103,7 +106,5 @@ function MyTickets() {
         </div>
     );
 }
-
-
 
 export default MyTickets;

@@ -3,7 +3,7 @@ import { debounce } from "lodash";
 import PropTypes from "prop-types";
 import { motion } from "framer-motion";
 import { useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useFormContext } from "react-hook-form";
 
 import Button from "./shared/Button";
@@ -33,29 +33,32 @@ function AttendeeDetailsForm() {
         window.scrollTo(0, { top: 0, behavior: "smooth" });
     }, []);
 
-    useEffect(() => {
-        if (Object.keys(formValues).length === 0) return;
+    const saveToLocalStorage = useCallback(
+        debounce((values) => {
+            localStorage.setItem("formData", JSON.stringify(values));
+        }, 500),
+        []
+    );
 
-        const saveToLocalStorage = debounce(() => {
-            localStorage.setItem("formData", JSON.stringify(formValues));
-        }, 500);
-        saveToLocalStorage();
+    useEffect(() => {
+        if (!Object.keys(formValues).length) return;
+
+        saveToLocalStorage(formValues);
 
         return () => saveToLocalStorage.cancel();
     }, [formValues]);
 
     useEffect(() => {
         const storedData = localStorage.getItem("formData");
+        if (!storedData) return;
+        try {
+            const parsedData = JSON.parse(storedData);
+            if (!parsedData || typeof parsedData !== "object") return;
 
-        if (storedData && storedData !== "{}") {
-            try {
-                const parsedData = JSON.parse(storedData);
-
-                setPreview(parsedData.profilePhoto);
-                reset(parsedData);
-            } catch (error) {
-                console.error("Error parsing form data:", error);
-            }
+            setPreview(parsedData.profilePhoto);
+            reset(parsedData);
+        } catch (error) {
+            console.error("Error parsing form data:", error);
         }
     }, []);
 

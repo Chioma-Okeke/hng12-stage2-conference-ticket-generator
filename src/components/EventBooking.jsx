@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 
 import Select from "./shared/Select";
 import Button from "./shared/Button";
@@ -44,23 +44,12 @@ function EventBooking({ event }) {
     });
     const navigate = useNavigate();
 
-    const ticketDetails = useMemo(
-        () => ({
-            numberOfTickets,
-            selectedTicket,
-        }),
-        [numberOfTickets, selectedTicket]
-    );
-
-    const navigateToAboutPage = () => {
-        navigate("/");
-        clearLocalStorage();
-    };
-
     useEffect(() => {
+        if (!selectedTicket && !numberOfTickets) return
+
         localStorage.setItem(
             "Selected Ticket Details",
-            JSON.stringify(ticketDetails)
+            JSON.stringify({ numberOfTickets, selectedTicket })
         );
     }, [selectedTicket, numberOfTickets]);
 
@@ -93,6 +82,11 @@ function EventBooking({ event }) {
         }));
     }, [numberOfTickets, selectedTicket]);
 
+    const navigateToAboutPage = () => {
+        navigate("/");
+        clearLocalStorage();
+    };
+
     const nextSection = () => {
         let hasError = false;
         let newErrors = { ...errorMessage };
@@ -122,10 +116,10 @@ function EventBooking({ event }) {
 
         localStorage.setItem(
             "Selected Ticket Details",
-            JSON.stringify(ticketDetails)
+            JSON.stringify({ numberOfTickets, selectedTicket })
         );
         localStorage.setItem("Current section", JSON.stringify(currentSection));
-        localStorage.setItem("selectedEvent", JSON.stringify(event))
+        localStorage.setItem("selectedEvent", JSON.stringify(event));
         dispatch(setCurrentSection("Attendee Details"));
         dispatch(setStepCounter(2));
     };

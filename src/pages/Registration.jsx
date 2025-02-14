@@ -28,16 +28,23 @@ function Registration() {
 
     useEffect(() => {
         window.scrollTo(0, { top: 0, behavior: "smooth" });
-    }, []);
 
-    useEffect(() => {
         const storedFormData = localStorage.getItem("formData");
         if (storedFormData) {
             methods.reset(JSON.parse(storedFormData));
         }
-    }, [methods]);
 
-    useEffect(() => {
+        const currentSection = localStorage.getItem("Current section");
+        if (currentSection) {
+            try {
+                const data = JSON.parse(currentSection);
+                dispatch(setStepCounter(data.step));
+                dispatch(setCurrentSection(data.sectionTitle));
+            } catch (error) {
+                console.error(error);
+            }
+        }
+
         const checkStorageClear = () => {
             if (!localStorage.getItem("formData")) {
                 methods.reset();
@@ -46,16 +53,7 @@ function Registration() {
 
         window.addEventListener("storage", checkStorageClear);
         return () => window.removeEventListener("storage", checkStorageClear);
-    }, [methods]);
-
-    useEffect(() => {
-        const currentSection = localStorage.getItem("Current section");
-        if (currentSection) {
-            const data = JSON.parse(currentSection);
-            dispatch(setStepCounter(data.step));
-            dispatch(setCurrentSection(data.sectionTitle));
-        }
-    }, [dispatch]);
+    }, [methods, dispatch]);
 
     const stepVariants = {
         initial: { opacity: 0.2, x: 50 },

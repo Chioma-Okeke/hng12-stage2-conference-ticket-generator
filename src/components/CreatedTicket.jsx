@@ -14,9 +14,9 @@ function CreatedTicket() {
     const dispatch = useDispatch();
     const [fetchedUserData, setFetchedUserData] = useState({});
     const [fetchedTicketData, setFetchedTicketData] = useState({});
-    const [fetchedEventData, setFetchedEventData] = useState({})
+    const [fetchedEventData, setFetchedEventData] = useState({});
     const resultRef = useRef(null);
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const [isDownloadInProgress, setIsDownloadInProgress] = useState(false);
     const currentSection = useSelector((state) => state.step.currentSection);
 
@@ -44,62 +44,45 @@ function CreatedTicket() {
     useEffect(() => {
         const storedData = localStorage.getItem("formData");
         const ticketData = localStorage.getItem("Selected Ticket Details");
-        const eventData = localStorage.getItem("selectedEvent")
+        const eventData = localStorage.getItem("selectedEvent");
 
         if (storedData && ticketData && eventData) {
             try {
                 const user = JSON.parse(storedData);
                 const ticket = JSON.parse(ticketData);
-                const event = JSON.parse(eventData)
-                console.log(ticket, "here 2")
+                const event = JSON.parse(eventData);
 
                 setFetchedUserData(user);
                 setFetchedTicketData(ticket);
-                setFetchedEventData(event)
-            } catch (error) {
-                console.error("Error parsing form data:", error);
-            }
-        }
-    }, []);
+                setFetchedEventData(event);
 
-    useEffect(() => {
-        const saveTicket = async () => {
-            const storedTicketData = localStorage.getItem(
-                "Selected Ticket Details"
-            );
-            const storedUserData = localStorage.getItem("formData");
-            const storedEventData = localStorage.getItem("selectedEvent")
-
-            if (storedTicketData && storedUserData && currentSection === "Ready") {
-                try {
-                    const ticketData = JSON.parse(storedTicketData);
-                    const userData = JSON.parse(storedUserData);
-                    const eventData = JSON.parse(storedEventData)
-
+                if (currentSection === "Ready") {
                     const alreadySaved = localStorage.getItem("TicketSaved");
                     if (!alreadySaved) {
-                        await saveTicketToDB({
-                            ticketData,
-                            userData,
-                            eventData,
+                        saveTicketToDB({
+                            ticketData: ticket,
+                            userData: user,
+                            eventData: event,
                             timestamp: new Date().toISOString(),
-                        });
-
-                        localStorage.setItem("TicketSaved", "true");
+                        })
+                            .then(() => {
+                                localStorage.setItem("TicketSaved", "true");
+                            })
+                            .catch((error) => {
+                                console.error("Error saving ticket:", error);
+                            });
                     }
-                } catch (error) {
-                    console.error("Error saving ticket:", error);
                 }
+            } catch (error) {
+                console.error("Error parsing localStorage data:", error);
             }
-        };
-
-        saveTicket();
-    }, []);
+        }
+    }, [currentSection]);
 
     const bookAnotherTicket = () => {
-        clearLocalStorage()
+        clearLocalStorage();
         dispatch(resetStep());
-        navigate("/")
+        navigate("/");
     };
 
     return (

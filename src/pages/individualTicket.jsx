@@ -22,6 +22,7 @@ function IndividualTicket() {
     useEffect(() => {
         const handleResize = () => setIsLargeScreen(window.innerWidth > 1024);
         window.addEventListener("resize", handleResize);
+        
         return () => window.removeEventListener("resize", handleResize);
     }, []);
 

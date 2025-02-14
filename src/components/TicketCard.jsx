@@ -5,8 +5,8 @@ const TicketCard = ({ ticket, viewTicket }) => {
     return (
         <div
             tabIndex={0}
-            onKeyDown={(e) => e.key === "Enter" && viewTicket()}
-            onClick={viewTicket}
+            onKeyDown={(e) => e.key === "Enter" && viewTicket(ticket)}
+            onClick={() => viewTicket(ticket)}
             className="relative cursor-pointer sm:w-[280px] lg:w-[350px] bg-[#07333c] border border-[#24A0B5] hover:border-2 rounded-xl p-4 shadow-lg text-white flex flex-col justify-between"
         >
             <div className="flex flex-col items-center">
