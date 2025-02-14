@@ -7,13 +7,15 @@ import Button from "./shared/Button";
 import { toPng } from "html-to-image";
 import Spinner from "./shared/Spinner";
 import { clearLocalStorage, saveTicketToDB } from "../utils/storage";
-import { setCurrentSection, setStepCounter } from "../redux/stepSlice";
+import { resetStep } from "../redux/stepSlice";
+import { useNavigate } from "react-router-dom";
 
 function CreatedTicket() {
     const dispatch = useDispatch();
     const [fetchedUserData, setFetchedUserData] = useState({});
     const [fetchedTicketData, setFetchedTicketData] = useState({});
     const resultRef = useRef(null);
+    const navigate = useNavigate()
     const [isDownloadInProgress, setIsDownloadInProgress] = useState(false);
     const currentSection = useSelector((state) => state.step.currentSection);
 
@@ -86,11 +88,10 @@ function CreatedTicket() {
         saveTicket();
     }, []);
 
-    const bookAnotherTicket = async () => {
+    const bookAnotherTicket = () => {
         clearLocalStorage()
-
-        dispatch(setStepCounter(1));
-        dispatch(setCurrentSection("Ticket Selection"));
+        dispatch(resetStep());
+        navigate("/")
     };
 
     return (

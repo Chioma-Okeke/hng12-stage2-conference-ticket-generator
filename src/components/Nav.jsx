@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { HiArrowLongRight } from "react-icons/hi2";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 
 import Logo from "../assets/logo.svg";
 import { resetStep } from "../redux/stepSlice";
@@ -25,6 +25,8 @@ const navigationLinks = [
 function NavSection() {
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation()
+    console.log(location.pathname)
 
     const [isButtonHovered, setIsButtonHovered] = useState(false);
 
@@ -59,6 +61,7 @@ function NavSection() {
                 <nav className="hidden md:block ">
                     <ul className="flex items-center gap-4 text-lg">
                         {navigationLinks.map((navItem, index) => {
+                            const isEventsActive = navItem.link === "/" && (location.pathname === "/" || location.pathname.includes("%"))
                             return (
                                 <NavLink
                                     onClick={() => {
@@ -77,12 +80,12 @@ function NavSection() {
                                         }
                                     }}
                                     className={({ isActive }) => {
-                                        return (
-                                            "p-[10px] no-underline transition-all ease-in-out duration-100 hover:text-white " +
-                                            (!isActive
-                                                ? "text-[#B3B3B3]"
-                                                : "text-white")
-                                        );
+                                        const isActiveClass =
+                                            isActive || (navItem.link === "/" && isEventsActive)
+                                                ? "text-white"
+                                                : "text-[#B3B3B3]";
+
+                                        return `p-[10px] no-underline transition-all ease-in-out duration-100 hover:text-white ${isActiveClass}`;
                                     }}
                                     to={navItem.link}
                                     key={index}

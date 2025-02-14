@@ -7,6 +7,7 @@ import Select from "./shared/Select";
 import Button from "./shared/Button";
 import { clearLocalStorage } from "../utils/storage";
 import { setCurrentSection, setStepCounter } from "../redux/stepSlice";
+import TicketCard from "./TicketCard";
 
 const availableTickets = [
     {
@@ -26,7 +27,7 @@ const availableTickets = [
     },
 ];
 
-function EventBooking() {
+function EventBooking({ event }) {
     const dispatch = useDispatch();
     const storedData = localStorage.getItem("Selected Ticket Details");
     const parsedData = storedData ? JSON.parse(storedData) : {};
@@ -52,7 +53,7 @@ function EventBooking() {
     );
 
     const navigateToAboutPage = () => {
-        navigate("/aboutproject");
+        navigate("/");
         clearLocalStorage();
     };
 
@@ -130,22 +131,7 @@ function EventBooking() {
 
     return (
         <section className="font-roboto text-[#FAFAFA] flex flex-col gap-8 mx-auto md:p-6 max-w-[604px] rounded-[32px] md:border border-[#0E464F] md:bg-[#08252B]">
-            <div className="flex flex-col items-center sm:h-[243px] md:h-auto justify-between md:justify-start gap-4 md:gap-2 relative py-4 px-3 sm:px-6 md:p-6 rounded-3xl border border-l-2 border-r-2 border-b-2 border-[#07373F] ticket-background">
-                <div className="flex flex-col sm:gap-2 event-name-card">
-                    <h1 className="text-center text-5xl md:text-[62px] font-roadRage leading-[62px] ">
-                        Techember Fest ”25
-                    </h1>
-                    <p className="text-center text-sm sm:text-base max-w-[239px] sm:max-w-[340px]">
-                        Join us for an unforgettable experience at Techember Fest ”25!
-                        Secure your spot now.
-                    </p>
-                </div>
-                <div className="flex flex-col md:flex-row gap-1 sm:gap-4 items-center text-sm sm:text-base">
-                    <span>📍 [Event Location]</span>
-                    <span className="hidden md:block">| |</span>
-                    <span>March 15, 2025 | 7:00 PM</span>
-                </div>
-            </div>
+            <TicketCard event={event} />
             <hr className="border- w-full border-[#07373F]" />
             <div className="flex flex-col gap-2">
                 <label id="ticketTypeLabel">Select Ticket Type:</label>
@@ -236,6 +222,7 @@ function EventBooking() {
 EventBooking.propTypes = {
     setStepCounter: PropTypes.func,
     setCurrentSection: PropTypes.func,
+    event: PropTypes.object
 };
 
 export default EventBooking;

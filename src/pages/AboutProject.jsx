@@ -13,7 +13,7 @@ function AboutProject() {
 
     return (
         <AnimatedSection>
-            <div className="mx-auto max-w-[800px] mt-[76px] font-roboto mb-6 p-6 lg:p-12 border border-[#0E464F] bg-[#041E23] flex flex-col gap-8 rounded-[40px]">
+            <div className="mx-auto max-w-[800px] mt-10 md:mt-14 font-roboto mb-6 p-6 lg:p-12 border border-[#0E464F] bg-[#041E23] flex flex-col gap-8 rounded-[40px]">
                 <article className="text-white text-sm lg:text-base font-normal font-['Roboto'] leading-normal">
                     Event Ticket Booking UI – Open Source Practice Project 🎟️
                     <br />
@@ -116,7 +116,7 @@ function AboutProject() {
                         💛 Enjoy
                     </p>
                 </div>
-                <div className="px-12 py-4 w-full max-w-[558px] mx-auto rounded-2xl border border-[#0E464F] flex flex-col-reverse md:flex-row gap-4 md:gap-6">
+                <div className="px-12 py-4 w-full max-w-[558px] mx-auto rounded-2xl border border-[#0E464F] flex flex-col-reverse md:flex-row gap-4 md:gap-6 text-sm sm:text-base">
                     <Button
                         href="https://www.figma.com/community/file/1470800949188681164/event-ticket-booking-ui-open-source-practice-project"
                         aria-label="Click to view figma file"
