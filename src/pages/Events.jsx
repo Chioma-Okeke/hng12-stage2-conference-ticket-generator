@@ -51,7 +51,7 @@ function Events() {
                     e.key === "Enter" && navigate("/aboutproject");
                 }}
                 onClick={() => navigate("/aboutproject")}
-                className="flex gap-2 justify-start items-center text-[#FAFAFA] font-jeju text-sm md:text-base pt-5 cursor-pointer transition-all ease-in-out duration-300 hover:underline hover:underline-offset-4"
+                className="w-fit flex gap-2 items-center text-[#FAFAFA] font-jeju text-sm md:text-base md:pl-5 pt-5 cursor-pointer transition-all ease-in-out duration-300 hover:underline hover:underline-offset-4"
             >
                 <FaArrowRightLong className="transform rotate-180" />
                 <p>Back to project description</p>

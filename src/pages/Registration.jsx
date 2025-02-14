@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { use, useEffect } from "react";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { FormProvider, useForm } from "react-hook-form";
 import { motion, AnimatePresence } from "framer-motion";
@@ -25,12 +25,13 @@ function Registration() {
     const location = useLocation();
     const navigate = useNavigate();
     const { event } = location.state || {};
-    console.log(methods, "methods on initial load");
-    console.log(stepCounter, currentSection, "once I navigate to here")
+
+    useEffect(() => {
+        window.scrollTo(0, { top: 0, behavior: "smooth" });
+    }, []);
 
     useEffect(() => {
         const storedFormData = localStorage.getItem("formData");
-        console.log(methods, "methods when trying to fetch from local storage");
         if (storedFormData) {
             methods.reset(JSON.parse(storedFormData));
         }
@@ -40,7 +41,6 @@ function Registration() {
         const checkStorageClear = () => {
             if (!localStorage.getItem("formData")) {
                 methods.reset();
-                console.log(methods, "methods when supposedly cleared");
             }
         };
 
@@ -49,8 +49,6 @@ function Registration() {
     }, [methods]);
 
     useEffect(() => {
-        window.scrollTo(0, { top: 0, behavior: "smooth" });
-
         const currentSection = localStorage.getItem("Current section");
         if (currentSection) {
             const data = JSON.parse(currentSection);
@@ -79,7 +77,7 @@ function Registration() {
                     e.key === "Enter" && navigateBackToEvents;
                 }}
                 onClick={navigateBackToEvents}
-                className="flex gap-2 justify-start items-center text-[#FAFAFA] font-jeju text-sm md:text-base pl-5 pt-5 cursor-pointer transition-all ease-in-out duration-300 hover:underline hover:underline-offset-4"
+                className="w-fit flex gap-2 items-center text-[#FAFAFA] font-jeju text-sm md:text-base pl-5 pt-5 cursor-pointer transition-all ease-in-out duration-300 hover:underline hover:underline-offset-4"
             >
                 <FaArrowRightLong className="transform rotate-180" />
                 <p>Back to available events</p>

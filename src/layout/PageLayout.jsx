@@ -4,7 +4,7 @@ import NavSection from "../components/Nav";
 
 function PageLayout() {
     return (
-        <main className="relative px-5 lg:p-0 bg-[]">
+        <main className="relative px-5 xl:p-0 bg-[]">
             <NavSection />
             <div tabIndex={0}>
                 <Outlet />
