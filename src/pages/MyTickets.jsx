@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-import { clearTicketsDB, getTicketsFromDB } from "../utils/storage";
+import { clearTicketsDB, deleteEntry, getTicketsFromDB } from "../utils/storage";
 import AnimatedSection from "../components/shared/AnimatedSection";
 import Button from "../components/shared/Button";
 import Spinner from "../components/shared/Spinner";
@@ -57,6 +57,15 @@ function MyTickets() {
         [navigate]
     );
 
+    const deleteTicket = useCallback(async (ticket)=> {
+        try {
+            await deleteEntry(ticket.id)
+            setFetchedData(prevData => prevData.filter(data => data.id !== ticket.id))
+        } catch (error) {
+            console.error("Error deleting ticket:", error)
+        }
+    }, [])
+
     return (
         <div className="pt-[46px] mb-[42px] mb:mb-[112px] min-h-screen">
             <AnimatedSection>
@@ -92,6 +101,7 @@ function MyTickets() {
                                     key={index}
                                     ticket={ticket}
                                     viewTicket={openTicket}
+                                    deleteTicket={deleteTicket}
                                 />
                             ))
                         ) : (

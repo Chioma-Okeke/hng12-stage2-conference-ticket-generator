@@ -59,6 +59,31 @@ export const clearTicketsDB = async () => {
     }
 };
 
+export const deleteEntry = async (id) => {
+    try {
+        const db = await openDB();
+        return new Promise((resolve, reject) => {
+            const transaction = db.transaction(STORE_NAME, "readwrite");
+            const store = transaction.objectStore(STORE_NAME);
+            const getRequest = store.get(id);
+            getRequest.onsuccess = () => {
+                if (getRequest.result) {
+                    const deleteRequest = store.delete(id);
+                    deleteRequest.onsuccess = () => resolve(true);
+                    deleteRequest.onerror = () =>
+                        reject("Failed to delete entry.");
+                } else {
+                    resolve(false);
+                }
+            };
+
+            getRequest.onerror = () => reject("Failed to retrieve entry.");
+        });
+    } catch (error) {
+        console.error("Error deleting entry from IndexedDb:", error);
+    }
+};
+
 export const clearLocalStorage = async () => {
     localStorage.removeItem("Selected Ticket Details");
     localStorage.removeItem("formData");
