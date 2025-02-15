@@ -171,7 +171,7 @@ function Ticket({ ticketData, userData, resultRef, eventData }) {
                 </div>
             </div>
 
-            <div className="absolute bottom-[22px] left-1/2 -translate-x-1/2">
+            <div className="absolute bottom-[25px] sm:bottom-[22px] left-1/2 -translate-x-1/2">
                 <img src={barcode} alt="" aria-hidden="true" />
             </div>
         </div>
