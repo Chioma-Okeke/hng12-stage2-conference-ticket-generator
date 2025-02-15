@@ -2,6 +2,12 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import EventCard from "../components/EventCard";
 import AnimatedSection from "../components/shared/AnimatedSection";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import {
+    resetStep,
+    setCurrentSection,
+    setStepCounter,
+} from "../redux/stepSlice";
 
 const events = [
     {
@@ -33,9 +39,15 @@ const events = [
 
 function Events() {
     const navigate = useNavigate();
+    const dispatch = useDispatch();
 
     const registerForEvent = (event) => {
-        console.log("clicked", event);
+        const currentSection = {
+            step: 1,
+            sectionTitle: "Ticket Selection",
+        };
+        localStorage.setItem("Current section", JSON.stringify(currentSection));
+        dispatch(resetStep());
         navigate(`/${event.name}`, {
             state: {
                 event: event,
