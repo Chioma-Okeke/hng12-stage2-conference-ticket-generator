@@ -8,8 +8,8 @@ import Spinner from "../components/shared/Spinner";
 import TicketCard from "../components/TicketCard";
 
 function MyTickets() {
-    const [fetchedData, setFetchedData] = useState([]);
     const navigate = useNavigate();
+    const [fetchedData, setFetchedData] = useState([]);
     const [isDeleteInProgress, setIsDeleteInProgress] = useState(false);
 
     useEffect(() => {

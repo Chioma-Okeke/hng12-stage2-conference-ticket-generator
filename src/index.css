@@ -100,12 +100,24 @@
   }
 }
 
+@media (max-width: 358px) {
+  #ticket-content {
+    height: auto;
+    flex: none;
+  }
+
+  .profile-image {
+    width: 100%;
+  }
+}
+
 /* Covers 336px and below */
 @media (max-width: 336px) {
   .profile-image {
-    width: 30%;
+    width: 50%;
     height: auto;
     margin: 10px auto;
+    border-width: 1px;
   }
 
   #ticket-heading {
@@ -134,5 +146,12 @@
   #ticket-content {
     width: 80%;
     top: 8px;
+  }
+
+  .profile-image {
+    width: 30%;
+    height: auto;
+    margin: 10px auto;
+    border-width: 1px;
   }
 }

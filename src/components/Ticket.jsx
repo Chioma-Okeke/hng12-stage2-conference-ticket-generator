@@ -81,7 +81,7 @@ function Ticket({ ticketData, userData, resultRef, eventData }) {
                 id="ticket-content"
                 role="region"
                 aria-labelledby="ticket-heading"
-                className="p-[14px] mx-auto w-full max-w-[260px] h-auto max-h-[446px] rounded-2xl absolute top-[20px] left-1/2 -translate-x-1/2 border border-[#24A0B5] backdrop-blur-sm bg-[#031E211A]"
+                className="p-[14px] mx-auto w-full max-w-[260px] h-[446px] max-h-[446px] rounded-2xl absolute top-[20px] left-1/2 -translate-x-1/2 border border-[#24A0B5] backdrop-blur-sm bg-[#031E211A] flex flex-col justify-between"
             >
                 <div className="flex flex-col items-center justify-center gap-1 relative">
                     <h1
@@ -102,7 +102,7 @@ function Ticket({ ticketData, userData, resultRef, eventData }) {
                     <img
                         src={userData.profilePhoto}
                         alt={`Profile photo of ${userData.fullName}`}
-                        className="my-[20px] w-full max-w-[140px] h-[140px] mx-auto rounded-xl object-cover border-4 border-[#24A0B5] profile-image"
+                        className="my-[20px] w-[140px] max-w-[140px] h-[140px] mx-auto rounded-xl object-cover border-4 border-[#24A0B5] profile-image"
                     />
                 </div>
                 <div
