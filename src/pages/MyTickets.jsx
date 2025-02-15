@@ -81,7 +81,7 @@ function MyTickets() {
                     </div>
                     <div
                         className={`${
-                            fetchedData.length > 0
+                            fetchedData.length > 1
                                 ? "grid"
                                 : "h-[70%] flex items-center"
                         } grid-cols-1 md:grid-cols-2 gap-6 mx-auto `}
