@@ -26,6 +26,7 @@ function AttendeeDetailsForm() {
     const dispatch = useDispatch();
     const [uploading, setUploading] = useState(false);
     const [showUploadIcon, setShowUploadIcon] = useState(false);
+    const [ticketType, setTicketType] = useState("")
 
     const formValues = watch();
 
@@ -50,8 +51,13 @@ function AttendeeDetailsForm() {
 
     useEffect(() => {
         const storedData = localStorage.getItem("formData");
-        if (!storedData) return;
+        const selectedTicket = localStorage.getItem("Selected Ticket Details")
+        if (!storedData && !selectedTicket) return;
         try {
+            const selectedTicketData = JSON.parse(selectedTicket)
+            if (!selectedTicketData || typeof selectedTicketData !== "object") return;
+            const ticketType = selectedTicketData.selectedTicket.accessType.split(" ")[0].toUpperCase()
+            setTicketType(ticketType)
             const parsedData = JSON.parse(storedData);
             if (!parsedData || typeof parsedData !== "object") return;
 
@@ -334,7 +340,7 @@ function AttendeeDetailsForm() {
                     aria-label="Proceed to conference ticket"
                     className="flex-1 bg-[#24A0B5] rounded-lg text-white focus:ring-2 focus:ring-blue-500 hover:text-[#24A0B5] hover:border hover:border-[#24A0B5] hover:bg-transparent transition-colors ease-in-out duration-300"
                 >
-                    Get My Free Ticket
+                    Get My {ticketType} Ticket
                 </Button>
             </div>
         </form>
